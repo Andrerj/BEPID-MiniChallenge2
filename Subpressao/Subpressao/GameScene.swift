@@ -7,39 +7,43 @@
 //
 
 import SpriteKit
+import UIKit
 
 class GameScene: SKScene {
+    
     override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
         
-        self.addChild(myLabel)
+        //        let alert = UIAlertView(title: "Você Sabia?", message: "A Sabesp...", delegate: self, cancelButtonTitle: "Jogar")
+        //        alert.show()
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        /* Called when a touch begins */
+        var touch: UITouch = touches.first as! UITouch
+        var location = touch.locationInNode(self)
+        var node = self.nodeAtPoint(location)
         
-        for touch in (touches as! Set<UITouch>) {
-            let location = touch.locationInNode(self)
+        // If next button is touched, start transition to second scene
+        if (node.name == "previousbutton") {
+            //            var secondScene = SecondScene(size: self.size)
+            var transition = SKTransition.flipVerticalWithDuration(1.0)
+            //            secondScene.scaleMode = SKSceneScaleMode.AspectFill
+            //            self.scene!.view?.presentScene(secondScene, transition: transition)
             
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
+            if let scene = HomeScene.unarchiveFromFile("HomeScene") as? HomeScene {
+                // Configure the view.
+                let skView = self.view as SKView!
+                skView.showsFPS = true
+                skView.showsNodeCount = true
+                
+                /* Sprite Kit applies additional optimizations to improve rendering performance */
+                skView.ignoresSiblingOrder = true
+                
+                /* Set the scale mode to scale to fit the window */
+                scene.scaleMode = .AspectFill
+                
+                skView.presentScene(scene, transition:transition)
+                
+            }
         }
-    }
-   
-    override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
     }
 }
