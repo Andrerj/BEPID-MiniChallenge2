@@ -1,20 +1,27 @@
 //
-//  GameScene.swift
+//  HomeScene.swift
 //  Subpressao
 //
-//  Created by André Rodrigues de Jesus on 5/21/15.
+//  Created by André Rodrigues de Jesus on 5/25/15.
 //  Copyright (c) 2015 André Rodrigues de Jesus. All rights reserved.
 //
 
 import SpriteKit
-import UIKit
 
-class GameScene: SKScene {
+class HomeScene: SKScene {
+    
     
     override func didMoveToView(view: SKView) {
         
-        //        let alert = UIAlertView(title: "Você Sabia?", message: "A Sabesp...", delegate: self, cancelButtonTitle: "Jogar")
-        //        alert.show()
+        let background = SKSpriteNode(imageNamed: "tela.png")
+        background.anchorPoint = CGPointMake(0, 0)
+        background.position = CGPointMake(0, 0)
+        background.size = CGSize(width: self.frame.width, height: self.frame.height)
+        background.name = "tela"
+        self.addChild(background)
+        
+        
+        
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -22,14 +29,15 @@ class GameScene: SKScene {
         var location = touch.locationInNode(self)
         var node = self.nodeAtPoint(location)
         
-        // If next button is touched, start transition to second scene
-        if (node.name == "previousbutton") {
-            //            var secondScene = SecondScene(size: self.size)
-            var transition = SKTransition.flipVerticalWithDuration(1.0)
-            //            secondScene.scaleMode = SKSceneScaleMode.AspectFill
-            //            self.scene!.view?.presentScene(secondScene, transition: transition)
+        // If previous button is touched, start transition to previous scene
+        
+        if (node.name == "btnJogar") {
+            //            var gameScene = GameScene(size: self.size)
+            var transition = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 1.5)
+            //            gameScene.scaleMode = SKSceneScaleMode.AspectFill
+            //            self.scene!.view?.presentScene(gameScene, transition: transition)
             
-            if let scene = HomeScene.unarchiveFromFile("HomeScene") as? HomeScene {
+            if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
                 // Configure the view.
                 let skView = self.view as SKView!
                 skView.showsFPS = true
@@ -42,8 +50,9 @@ class GameScene: SKScene {
                 scene.scaleMode = .AspectFill
                 
                 skView.presentScene(scene, transition:transition)
-                
             }
+            
         }
     }
+    
 }
