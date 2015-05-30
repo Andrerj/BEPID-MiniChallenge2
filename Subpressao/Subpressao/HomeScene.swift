@@ -22,8 +22,8 @@ class HomeScene: SKScene {
         
         
         
+      
     }
-    
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         var touch: UITouch = touches.first as! UITouch
         var location = touch.locationInNode(self)
