@@ -24,8 +24,12 @@ class GameScene: SKScene {
     var moveSpriteAndDestroy: SKAction?
     var lastSpawn:CFTimeInterval = 0;
     
+    var holeTexture:SKTexture?
+    
     override func didMoveToView(view: SKView) {
+
         
+<<<<<<< HEAD
         configureAccelerometer()
         
         //        let alert = UIAlertView(title: "Você Sabia?", message: "A Sabesp...", delegate: self, cancelButtonTitle: "Jogar")
@@ -35,9 +39,21 @@ class GameScene: SKScene {
         
         createWater()
         
+=======
+        setImages(SKTexture(imageNamed: "lateral1"), Tex2: SKTexture(imageNamed: "lateral2"), zIndex: 3)
+        setImages(SKTexture(imageNamed: "cano1"), Tex2: SKTexture(imageNamed: "cano2"), zIndex: 0)
+        
+        //160,717
+        //629,385
+        
+        holeTexture = SKTexture(imageNamed:"hole")
+    }
+    
+    func setImages(Tex: SKTexture, Tex2: SKTexture, zIndex: Int){
+>>>>>>> 67c4ab6517b71910402a36b02d57686c04d48220
         var backgroundNode = SKNode()
-        var backTex = SKTexture(imageNamed: "Cano1")
-        var backTex2 = SKTexture(imageNamed: "Cano2")
+        var backTex = Tex
+        var backTex2 = Tex2
         
         let scaleValue:CGFloat = self.frame.size.height/backTex.size().height
         
@@ -45,18 +61,18 @@ class GameScene: SKScene {
         
         var resetSkySprite = SKAction.moveByX(0, y: backTex.size().height * 2 * scaleValue, duration: 0.0)
         
-        var moveSkySpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveSkySprite,resetSkySprite]))
+        var moveSkySpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveSkySprite]))//, resetSkySprite]))
         
         moveSpriteAndDestroy = SKAction.sequence([moveSkySprite, SKAction.removeFromParent()])
         
-        for i in 0...3 {
+        for i in 0...2 {
             let backgroundPiece = SKSpriteNode(texture:((i%2==1) ? backTex : backTex2))
             
             //backgroundNode!.size.height = self.frame.size.height
             backgroundPiece.anchorPoint = CGPoint(x: 0.5, y: 0.0)
             backgroundPiece.setScale(scaleValue)
-            backgroundPiece.position = CGPoint(x: self.frame.size.width / 2.0, y: CGFloat(i) * (backTex.size().height * scaleValue))
-            
+            backgroundPiece.position = CGPoint(x: self.frame.size.width / 2.0, y: CGFloat(i) * (backTex2.size().height * scaleValue))
+            backgroundPiece.zPosition = CGFloat(zIndex)
             backgroundPiece.runAction(moveSkySpritesForever)
             
             backgroundNode.addChild(backgroundPiece)
@@ -64,19 +80,10 @@ class GameScene: SKScene {
         }
         
         addChild(backgroundNode)
-        
-        //160,717
-        //629,385
-        
-        func getRandomValue () -> CGPoint{
-            let randomX = arc4random_uniform(469)+161
-            // y coordinate between MinY (top) and MidY (middle):
-            let randomY = arc4random_uniform(UInt32(self.view!.frame.height))
-            
-            return CGPointMake(CGFloat(randomX), CGFloat(randomY))
-        }
     }
+
     
+<<<<<<< HEAD
     func configureAccelerometer() {
         self.physicsWorld.gravity = CGVectorMake(0 , 0);
         println(self.view!.frame)
@@ -135,6 +142,9 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+=======
+   /* override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+>>>>>>> 67c4ab6517b71910402a36b02d57686c04d48220
         var touch: UITouch = touches.first as! UITouch
         var location = touch.locationInNode(self)
         var node = self.nodeAtPoint(location)
@@ -162,14 +172,14 @@ class GameScene: SKScene {
                 
             }
         }
-    }
+    }*/
     
     func getRandomValue () -> CGPoint{
         let randomX = arc4random_uniform(446)+175
         // y coordinate between MinY (top) and MidY (middle):
-        let randomY = arc4random_uniform(UInt32(self.view!.frame.height))
+        // let randomY = arc4random_uniform(UInt32(self.view!.frame.height))
         
-        return CGPointMake(CGFloat(randomX), CGFloat(self.view!.frame.height) + 200)
+        return CGPointMake(CGFloat(randomX), 1024 + holeTexture!.size().height/2.0)
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -181,10 +191,10 @@ class GameScene: SKScene {
         
         if currentTime > lastSpawn + 1 {
             
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
+            let sprite = SKSpriteNode(texture: holeTexture)
             
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
+            sprite.xScale = 0.75
+            sprite.yScale = 0.75
             sprite.position = getRandomValue()
             sprite.runAction(moveSpriteAndDestroy)
             

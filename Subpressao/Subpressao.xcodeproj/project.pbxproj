@@ -450,8 +450,11 @@
 				INFOPLIST_FILE = Subpressao/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+<<<<<<< HEAD
 				SWIFT_OBJC_BRIDGING_HEADER = "Subpressao/Subpressao-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+=======
+>>>>>>> 67c4ab6517b71910402a36b02d57686c04d48220
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -464,7 +467,10 @@
 				INFOPLIST_FILE = Subpressao/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+<<<<<<< HEAD
 				SWIFT_OBJC_BRIDGING_HEADER = "Subpressao/Subpressao-Bridging-Header.h";
+=======
+>>>>>>> 67c4ab6517b71910402a36b02d57686c04d48220
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
