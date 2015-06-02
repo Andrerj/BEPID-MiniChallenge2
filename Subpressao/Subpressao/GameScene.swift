@@ -8,16 +8,32 @@
 
 import SpriteKit
 import UIKit
+import CoreMotion
 
 class GameScene: SKScene {
     
+    // Motion manager para uso do Acelerometro
+    let motionManager = CMMotionManager()
+    
+    // Posicao inicial da agua, vinda do arquivo SKS
+    var waterStartPos:SKNode?
+    
+    // Node de liquido
+    var liquidNode:LQKLiquidNode?
+
     var moveSpriteAndDestroy: SKAction?
     var lastSpawn:CFTimeInterval = 0;
     
     override func didMoveToView(view: SKView) {
         
+        configureAccelerometer()
+        
         //        let alert = UIAlertView(title: "Você Sabia?", message: "A Sabesp...", delegate: self, cancelButtonTitle: "Jogar")
         //        alert.show()
+        
+        waterStartPos = self .childNodeWithName("WaterStartPos")
+        
+        createWater()
         
         var backgroundNode = SKNode()
         var backTex = SKTexture(imageNamed: "Cano1")
@@ -59,6 +75,63 @@ class GameScene: SKScene {
             
             return CGPointMake(CGFloat(randomX), CGFloat(randomY))
         }
+    }
+    
+    func configureAccelerometer() {
+        self.physicsWorld.gravity = CGVectorMake(0 , 0);
+        println(self.view!.frame)
+        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: self.view!.frame)
+        
+        motionManager.accelerometerUpdateInterval = 0.2
+        motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue(), withHandler:{
+            accelerometerData, error in
+            let acceleration = accelerometerData.acceleration;
+            self.physicsWorld.gravity = CGVectorMake(CGFloat(acceleration.x * 25) , -25);
+        })
+
+    }
+    
+    func createWater() {
+        let width = 16;
+        let density = 1;
+        let blurRadius = 16;
+        let radius = 8;
+        
+        /* Create a texturing strategy for the liquid -- built-in, or on your own */
+        let solidEffect:LQKSolidColorEffect = LQKSolidColorEffect(color: UIColor(red: CGFloat(70/255.0), green: CGFloat(200/255.0), blue: CGFloat(240/255.0), alpha: 1), withIndex: CGFloat(1), withWidth: CGFloat(width))
+        
+        /* Create a liquid filter with the liquid texturing effect */
+        let filter:LQKCILiquidFilter = LQKCILiquidFilter(blurRadius: CGFloat(blurRadius), withLiquidEffect: solidEffect)
+        
+        /* Create a liquid node with the liquid filter */
+        liquidNode = LQKLiquidNode(blurRadius: blurRadius, withLiquidFilter: filter)
+        
+        /* Create a particle factory that can produce optimized particles of a given size */
+        let liquidParticleFactory:LQKLiquidParticleFactory = LQKLiquidParticleFactory(radius: CGFloat(radius))
+        
+        for i in 0..<20 {
+            /* Spawn a single bead of liquid */
+            let particleNode:SKNode = liquidParticleFactory.createLiquidParticle()
+            particleNode.position = getRandomPointInCircle(waterStartPos!.position, withRadius: 50)
+            particleNode.physicsBody!.density = CGFloat(density);
+            
+            /* Add the particle to the liquid so it will adopt its visual properties */
+            liquidNode!.addChild(particleNode)
+        }
+        
+        self.addChild(liquidNode!)
+    }
+    
+    func getRandomPointInCircle(cCenter:(CGPoint), withRadius cRadius:(CGFloat)) -> CGPoint {
+        
+        let r:Float = Float(arc4random_uniform(UInt32(cRadius)))
+        let angle:Float = Float(arc4random_uniform(UInt32(M_PI*628.0)))/314.0
+        
+        // Now use the equations above!
+        let x = Float(cCenter.x) + r * cosf(angle);
+        let y = Float(cCenter.y) + r * sinf(angle);
+        
+        return CGPointMake(CGFloat(x), CGFloat(y));
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
