@@ -10,7 +10,7 @@ import SpriteKit
 
 class GameOverScene: SKScene{
     
-}
+
 //size compartilhe
 //X:356,339 Y:80,048
 
@@ -18,10 +18,41 @@ class GameOverScene: SKScene{
 //X:387,09 y:496,338
 
 
-
-
 //size tente novamente
 //X:401,715 Y:76,891
 
 //position
 //X:386,514 Y:395,824
+
+
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        var touch: UITouch = touches.first as! UITouch
+        var location = touch.locationInNode(self)
+        var node = self.nodeAtPoint(location)
+        
+        // If previous button is touched, start transition to previous scene
+        
+        if (node.name == "TentarNovamente") {
+            //            var gameScene = GameScene(size: self.size)
+            var transition = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 1.5)
+            //            gameScene.scaleMode = SKSceneScaleMode.AspectFill
+            //            self.scene!.view?.presentScene(gameScene, transition: transition)
+            
+            if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
+                // Configure the view.
+                let skView = self.view as SKView!
+                skView.showsFPS = true
+                skView.showsNodeCount = true
+                
+                /* Sprite Kit applies additional optimizations to improve rendering performance */
+                skView.ignoresSiblingOrder = true
+                
+                /* Set the scale mode to scale to fit the window */
+                scene.scaleMode = .AspectFill
+                
+                skView.presentScene(scene, transition:transition)
+            }
+            
+        }
+    }
+}
