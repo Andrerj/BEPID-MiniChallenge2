@@ -13,13 +13,6 @@ class HomeScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         
-        let background = SKSpriteNode(imageNamed: "tela.png")
-        background.anchorPoint = CGPointMake(0, 0)
-        background.position = CGPointMake(0, 0)
-        background.size = CGSize(width: self.frame.width, height: self.frame.height)
-        background.name = "tela"
-        self.addChild(background)
-        
         
         
       

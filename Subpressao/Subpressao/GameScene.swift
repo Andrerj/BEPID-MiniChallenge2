@@ -17,9 +17,6 @@ class GameScene: SKScene {
     var holeTexture:SKTexture?
     
     override func didMoveToView(view: SKView) {
-        
-        //        let alert = UIAlertView(title: "Você Sabia?", message: "A Sabesp...", delegate: self, cancelButtonTitle: "Jogar")
-        //        alert.show()
 
         
         setImages(SKTexture(imageNamed: "lateral1"), Tex2: SKTexture(imageNamed: "lateral2"), zIndex: 3)
@@ -28,7 +25,7 @@ class GameScene: SKScene {
         //160,717
         //629,385
         
-        holeTexture = SKTexture(imageNamed:"Hole")
+        holeTexture = SKTexture(imageNamed:"hole")
     }
     
     func setImages(Tex: SKTexture, Tex2: SKTexture, zIndex: Int){
@@ -46,7 +43,7 @@ class GameScene: SKScene {
         
         moveSpriteAndDestroy = SKAction.sequence([moveSkySprite, SKAction.removeFromParent()])
         
-        for i in 0...100 {
+        for i in 0...2 {
             let backgroundPiece = SKSpriteNode(texture:((i%2==1) ? backTex : backTex2))
             
             //backgroundNode!.size.height = self.frame.size.height
@@ -64,7 +61,7 @@ class GameScene: SKScene {
     }
 
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+   /* override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         var touch: UITouch = touches.first as! UITouch
         var location = touch.locationInNode(self)
         var node = self.nodeAtPoint(location)
@@ -92,7 +89,7 @@ class GameScene: SKScene {
                 
             }
         }
-    }
+    }*/
     
     func getRandomValue () -> CGPoint{
         let randomX = arc4random_uniform(446)+175
@@ -113,8 +110,8 @@ class GameScene: SKScene {
             
             let sprite = SKSpriteNode(texture: holeTexture)
             
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
+            sprite.xScale = 0.75
+            sprite.yScale = 0.75
             sprite.position = getRandomValue()
             sprite.runAction(moveSpriteAndDestroy)
             
