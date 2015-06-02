@@ -33,12 +33,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var moveSpriteAndDestroy: SKAction?
     var lastSpawn:CFTimeInterval = 0;
+    var firstUpdate:CFTimeInterval = 0;
     
     var holeTexture:SKTexture?
     
-    var highScore:Int?
-    
-    var waterNode = 20
+    var score:Int = 0
+    var scoreLabel:SKLabelNode?
     
     override func didMoveToView(view: SKView) {
         
@@ -47,10 +47,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         configureAccelerometer()
         
         waterStartPos = self .childNodeWithName("WaterStartPos")
+        scoreLabel = self.childNodeWithName("ScoreLabel") as! SKLabelNode!
         
         createWater()
         
-        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRectMake(245, 0, 277, 1024))
+        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRectMake(245, 0, 277, 924))
         self.physicsBody!.categoryBitMask = CollisionCategory.Boundary.rawValue
         self.physicsBody!.collisionBitMask = CollisionCategory.Water.rawValue
         self.physicsBody!.contactTestBitMask = CollisionCategory.None.rawValue
@@ -220,8 +221,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         circularBoundary?.position = averageWater
         
         if lastSpawn == 0 {
+            firstUpdate = currentTime
             lastSpawn = currentTime
         }
+        
+        score = Int((currentTime - firstUpdate) * 10);
+        scoreLabel?.text = "\(Double(score)/10.0) metros";
         
         if currentTime > lastSpawn + 1 {
             
@@ -262,7 +267,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
             if liquidNode!.children.count == 0 {
                 
-                var transition = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 1.5)
+                var transition = SKTransition.pushWithDirection(SKTransitionDirection.Down, duration: 1.5)
                 
                 if let scene = GameOverScene.unarchiveFromFile("GameOverScene") as? GameOverScene {
                     // Configure the view.
