@@ -23,6 +23,8 @@ extension SKNode {
                 scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
             case "HomeScene":
                 scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! HomeScene
+            case "GameOverScene":
+                scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameOverScene
             default:
                 println("Erro! Cena inexistente")
                 scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene

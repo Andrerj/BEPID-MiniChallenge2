@@ -29,6 +29,8 @@ class GameScene: SKScene {
     
     var holeTexture:SKTexture?
     
+    var highScore:Int?
+    
     override func didMoveToView(view: SKView) {
         
         configureAccelerometer()
@@ -136,6 +138,15 @@ class GameScene: SKScene {
         
         self.addChild(liquidNode!)
     }
+    
+    func placar(){
+        
+        let prefs = NSUserDefaults.standardUserDefaults()
+        prefs.setValue("Berlin", forKey: "userCity")
+        //This code saves the value "Berlin" to a key named "userCity".
+    
+    }
+
     
     func getRandomPointInCircle(cCenter:(CGPoint), withRadius cRadius:(CGFloat)) -> CGPoint {
         
