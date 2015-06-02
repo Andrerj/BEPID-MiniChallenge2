@@ -21,6 +21,9 @@ class GameScene: SKScene {
     // Node de liquido
     var liquidNode:LQKLiquidNode?
     
+    // Node de limite circular
+    var circularBoundary:SKNode?
+    
     var moveSpriteAndDestroy: SKAction?
     var lastSpawn:CFTimeInterval = 0;
     
@@ -36,6 +39,15 @@ class GameScene: SKScene {
         waterStartPos = self .childNodeWithName("WaterStartPos")
         
         createWater()
+        
+        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRectMake(245, 0, 277, 1024))
+        circularBoundary = SKNode()
+        circularBoundary?.position = waterStartPos!.position
+        let circlePath:CGMutablePathRef!  = CGPathCreateMutable();
+        CGPathAddArc(circlePath, nil, 0, 0, 70, 0, CGFloat(M_PI * 2), true);
+        circularBoundary?.physicsBody = SKPhysicsBody(edgeLoopFromPath: circlePath)
+        circularBoundary?.physicsBody!.pinned = true
+        self.addChild(circularBoundary!)
         
         setImages(SKTexture(imageNamed: "lateral1"), Tex2: SKTexture(imageNamed: "lateral2"), zIndex: 3)
         setImages(SKTexture(imageNamed: "cano1"), Tex2: SKTexture(imageNamed: "cano2"), zIndex: 0)
@@ -58,11 +70,11 @@ class GameScene: SKScene {
         
         var resetSkySprite = SKAction.moveByX(0, y: backTex.size().height * 2 * scaleValue, duration: 0.0)
         
-        var moveSkySpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveSkySprite]))//, resetSkySprite]))
+        var moveSkySpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveSkySprite, resetSkySprite]))
         
         moveSpriteAndDestroy = SKAction.sequence([moveSkySprite, SKAction.removeFromParent()])
         
-        for i in 0...2 {
+        for i in 0...3 {
             let backgroundPiece = SKSpriteNode(texture:((i%2==1) ? backTex : backTex2))
             
             //backgroundNode!.size.height = self.frame.size.height
@@ -89,7 +101,7 @@ class GameScene: SKScene {
         motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue(), withHandler:{
             accelerometerData, error in
             let acceleration = accelerometerData.acceleration;
-            self.physicsWorld.gravity = CGVectorMake(CGFloat(acceleration.x * 25) , -25);
+            self.physicsWorld.gravity = CGVectorMake(CGFloat(acceleration.x * 9.8) , CGFloat(acceleration.y * 9.8));
         })
         
     }
@@ -174,6 +186,9 @@ class GameScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         
+        let averageWater = getWaterAveragePosition()
+        circularBoundary?.position = averageWater
+        
         if lastSpawn == 0 {
             lastSpawn = currentTime
         }
@@ -192,8 +207,18 @@ class GameScene: SKScene {
         }
     }
     
+    func getWaterAveragePosition() -> CGPoint {
+        var xSum:CGFloat = 0
+        var ySum:CGFloat = 0
+        for node in liquidNode!.children {
+            xSum += node.position.x
+            ySum += node.position.y
+        }
+        return CGPointMake(xSum/CGFloat(liquidNode!.children.count), ySum/CGFloat(liquidNode!.children.count))
+    }
+    
     func getRandomValue () -> CGPoint{
-        let randomX = arc4random_uniform(446)+175
+        let randomX = arc4random_uniform(277)+245
         // y coordinate between MinY (top) and MidY (middle):
         // let randomY = arc4random_uniform(UInt32(self.view!.frame.height))
         
