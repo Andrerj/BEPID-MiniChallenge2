@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A5312DCA1B1CD75E00C9B2AE /* LiquidKit-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A5312DBA1B1CD75E00C9B2AE /* LiquidKit-Info.plist */; };
+		A5312DCB1B1CD75E00C9B2AE /* LQKCILiquidFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A5312DBE1B1CD75E00C9B2AE /* LQKCILiquidFilter.m */; };
+		A5312DCC1B1CD75E00C9B2AE /* LQKImageUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A5312DC01B1CD75E00C9B2AE /* LQKImageUtils.m */; };
+		A5312DCD1B1CD75E00C9B2AE /* LQKImageUtils+iOSUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A5312DC21B1CD75E00C9B2AE /* LQKImageUtils+iOSUtils.m */; };
+		A5312DCE1B1CD75E00C9B2AE /* LQKLiquidNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A5312DC51B1CD75E00C9B2AE /* LQKLiquidNode.m */; };
+		A5312DCF1B1CD75E00C9B2AE /* LQKLiquidParticleFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5312DC71B1CD75E00C9B2AE /* LQKLiquidParticleFactory.m */; };
+		A5312DD01B1CD75E00C9B2AE /* LQKSolidColorEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = A5312DC91B1CD75E00C9B2AE /* LQKSolidColorEffect.m */; };
 		B092310C1B13A65400B89D9F /* HomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092310B1B13A65400B89D9F /* HomeScene.swift */; };
 		B092310E1B13ADE100B89D9F /* HomeScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B092310D1B13ADE100B89D9F /* HomeScene.sks */; };
 		B09231101B13AE3100B89D9F /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092310F1B13AE3100B89D9F /* GameOverScene.swift */; };
@@ -32,6 +39,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A5312DB91B1CD71F00C9B2AE /* Subpressao-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Subpressao-Bridging-Header.h"; sourceTree = "<group>"; };
+		A5312DBA1B1CD75E00C9B2AE /* LiquidKit-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LiquidKit-Info.plist"; sourceTree = "<group>"; };
+		A5312DBB1B1CD75E00C9B2AE /* LiquidKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LiquidKit-Prefix.pch"; sourceTree = "<group>"; };
+		A5312DBC1B1CD75E00C9B2AE /* LiquidKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiquidKit.h; sourceTree = "<group>"; };
+		A5312DBD1B1CD75E00C9B2AE /* LQKCILiquidFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQKCILiquidFilter.h; sourceTree = "<group>"; };
+		A5312DBE1B1CD75E00C9B2AE /* LQKCILiquidFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LQKCILiquidFilter.m; sourceTree = "<group>"; };
+		A5312DBF1B1CD75E00C9B2AE /* LQKImageUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQKImageUtils.h; sourceTree = "<group>"; };
+		A5312DC01B1CD75E00C9B2AE /* LQKImageUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LQKImageUtils.m; sourceTree = "<group>"; };
+		A5312DC11B1CD75E00C9B2AE /* LQKImageUtils+iOSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LQKImageUtils+iOSUtils.h"; sourceTree = "<group>"; };
+		A5312DC21B1CD75E00C9B2AE /* LQKImageUtils+iOSUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LQKImageUtils+iOSUtils.m"; sourceTree = "<group>"; };
+		A5312DC31B1CD75E00C9B2AE /* LQKLiquidEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQKLiquidEffect.h; sourceTree = "<group>"; };
+		A5312DC41B1CD75E00C9B2AE /* LQKLiquidNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQKLiquidNode.h; sourceTree = "<group>"; };
+		A5312DC51B1CD75E00C9B2AE /* LQKLiquidNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LQKLiquidNode.m; sourceTree = "<group>"; };
+		A5312DC61B1CD75E00C9B2AE /* LQKLiquidParticleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQKLiquidParticleFactory.h; sourceTree = "<group>"; };
+		A5312DC71B1CD75E00C9B2AE /* LQKLiquidParticleFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LQKLiquidParticleFactory.m; sourceTree = "<group>"; };
+		A5312DC81B1CD75E00C9B2AE /* LQKSolidColorEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQKSolidColorEffect.h; sourceTree = "<group>"; };
+		A5312DC91B1CD75E00C9B2AE /* LQKSolidColorEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LQKSolidColorEffect.m; sourceTree = "<group>"; };
 		B092310B1B13A65400B89D9F /* HomeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScene.swift; sourceTree = "<group>"; };
 		B092310D1B13ADE100B89D9F /* HomeScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HomeScene.sks; sourceTree = "<group>"; };
 		B092310F1B13AE3100B89D9F /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
@@ -68,6 +92,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A5312DA11B1CD2E600C9B2AE /* LiquidKit */ = {
+			isa = PBXGroup;
+			children = (
+				A5312DB91B1CD71F00C9B2AE /* Subpressao-Bridging-Header.h */,
+				A5312DBA1B1CD75E00C9B2AE /* LiquidKit-Info.plist */,
+				A5312DBB1B1CD75E00C9B2AE /* LiquidKit-Prefix.pch */,
+				A5312DBC1B1CD75E00C9B2AE /* LiquidKit.h */,
+				A5312DBD1B1CD75E00C9B2AE /* LQKCILiquidFilter.h */,
+				A5312DBE1B1CD75E00C9B2AE /* LQKCILiquidFilter.m */,
+				A5312DBF1B1CD75E00C9B2AE /* LQKImageUtils.h */,
+				A5312DC01B1CD75E00C9B2AE /* LQKImageUtils.m */,
+				A5312DC11B1CD75E00C9B2AE /* LQKImageUtils+iOSUtils.h */,
+				A5312DC21B1CD75E00C9B2AE /* LQKImageUtils+iOSUtils.m */,
+				A5312DC31B1CD75E00C9B2AE /* LQKLiquidEffect.h */,
+				A5312DC41B1CD75E00C9B2AE /* LQKLiquidNode.h */,
+				A5312DC51B1CD75E00C9B2AE /* LQKLiquidNode.m */,
+				A5312DC61B1CD75E00C9B2AE /* LQKLiquidParticleFactory.h */,
+				A5312DC71B1CD75E00C9B2AE /* LQKLiquidParticleFactory.m */,
+				A5312DC81B1CD75E00C9B2AE /* LQKSolidColorEffect.h */,
+				A5312DC91B1CD75E00C9B2AE /* LQKSolidColorEffect.m */,
+			);
+			name = LiquidKit;
+			sourceTree = "<group>";
+		};
 		B09231081B13A5D300B89D9F /* GameScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +164,7 @@
 		B0DCFE151B0E60960058C763 /* Subpressao */ = {
 			isa = PBXGroup;
 			children = (
+				A5312DA11B1CD2E600C9B2AE /* LiquidKit */,
 				B09231091B13A5E900B89D9F /* HomeScene */,
 				B09231081B13A5D300B89D9F /* GameScene */,
 				B092310A1B13A5FB00B89D9F /* GameOverScene */,
@@ -236,6 +285,7 @@
 			files = (
 				B0DCFE271B0E60960058C763 /* LaunchScreen.xib in Resources */,
 				B092310E1B13ADE100B89D9F /* HomeScene.sks in Resources */,
+				A5312DCA1B1CD75E00C9B2AE /* LiquidKit-Info.plist in Resources */,
 				B0DCFE241B0E60960058C763 /* Images.xcassets in Resources */,
 				B0DCFE1B1B0E60960058C763 /* GameScene.sks in Resources */,
 				B09231121B13AE8E00B89D9F /* GameOverScene.sks in Resources */,
@@ -257,11 +307,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5312DCE1B1CD75E00C9B2AE /* LQKLiquidNode.m in Sources */,
+				A5312DCF1B1CD75E00C9B2AE /* LQKLiquidParticleFactory.m in Sources */,
+				A5312DD01B1CD75E00C9B2AE /* LQKSolidColorEffect.m in Sources */,
 				B09231101B13AE3100B89D9F /* GameOverScene.swift in Sources */,
 				B0DCFE1D1B0E60960058C763 /* GameScene.swift in Sources */,
+				A5312DCB1B1CD75E00C9B2AE /* LQKCILiquidFilter.m in Sources */,
 				B092310C1B13A65400B89D9F /* HomeScene.swift in Sources */,
 				B0DCFE1F1B0E60960058C763 /* GameViewController.swift in Sources */,
 				B0DCFE191B0E60960058C763 /* AppDelegate.swift in Sources */,
+				A5312DCD1B1CD75E00C9B2AE /* LQKImageUtils+iOSUtils.m in Sources */,
+				A5312DCC1B1CD75E00C9B2AE /* LQKImageUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,9 +446,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Subpressao/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Subpressao/Subpressao-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -400,9 +460,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Subpressao/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Subpressao/Subpressao-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
