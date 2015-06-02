@@ -20,16 +20,14 @@ class GameScene: SKScene {
     
     // Node de liquido
     var liquidNode:LQKLiquidNode?
-
+    
     var moveSpriteAndDestroy: SKAction?
     var lastSpawn:CFTimeInterval = 0;
     
     var holeTexture:SKTexture?
     
     override func didMoveToView(view: SKView) {
-
         
-<<<<<<< HEAD
         configureAccelerometer()
         
         //        let alert = UIAlertView(title: "Você Sabia?", message: "A Sabesp...", delegate: self, cancelButtonTitle: "Jogar")
@@ -39,7 +37,6 @@ class GameScene: SKScene {
         
         createWater()
         
-=======
         setImages(SKTexture(imageNamed: "lateral1"), Tex2: SKTexture(imageNamed: "lateral2"), zIndex: 3)
         setImages(SKTexture(imageNamed: "cano1"), Tex2: SKTexture(imageNamed: "cano2"), zIndex: 0)
         
@@ -50,7 +47,7 @@ class GameScene: SKScene {
     }
     
     func setImages(Tex: SKTexture, Tex2: SKTexture, zIndex: Int){
->>>>>>> 67c4ab6517b71910402a36b02d57686c04d48220
+        
         var backgroundNode = SKNode()
         var backTex = Tex
         var backTex2 = Tex2
@@ -81,9 +78,8 @@ class GameScene: SKScene {
         
         addChild(backgroundNode)
     }
-
     
-<<<<<<< HEAD
+    
     func configureAccelerometer() {
         self.physicsWorld.gravity = CGVectorMake(0 , 0);
         println(self.view!.frame)
@@ -95,7 +91,7 @@ class GameScene: SKScene {
             let acceleration = accelerometerData.acceleration;
             self.physicsWorld.gravity = CGVectorMake(CGFloat(acceleration.x * 25) , -25);
         })
-
+        
     }
     
     func createWater() {
@@ -142,44 +138,37 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-=======
-   /* override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
->>>>>>> 67c4ab6517b71910402a36b02d57686c04d48220
+        
+        /* override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        
         var touch: UITouch = touches.first as! UITouch
         var location = touch.locationInNode(self)
         var node = self.nodeAtPoint(location)
         
         // If next button is touched, start transition to second scene
         if (node.name == "previousbutton") {
-            //            var secondScene = SecondScene(size: self.size)
-            var transition = SKTransition.flipVerticalWithDuration(1.0)
-            //            secondScene.scaleMode = SKSceneScaleMode.AspectFill
-            //            self.scene!.view?.presentScene(secondScene, transition: transition)
-            
-            if let scene = HomeScene.unarchiveFromFile("HomeScene") as? HomeScene {
-                // Configure the view.
-                let skView = self.view as SKView!
-                skView.showsFPS = true
-                skView.showsNodeCount = true
-                
-                /* Sprite Kit applies additional optimizations to improve rendering performance */
-                skView.ignoresSiblingOrder = true
-                
-                /* Set the scale mode to scale to fit the window */
-                scene.scaleMode = .AspectFill
-                
-                skView.presentScene(scene, transition:transition)
-                
-            }
-        }
-    }*/
-    
-    func getRandomValue () -> CGPoint{
-        let randomX = arc4random_uniform(446)+175
-        // y coordinate between MinY (top) and MidY (middle):
-        // let randomY = arc4random_uniform(UInt32(self.view!.frame.height))
+        //            var secondScene = SecondScene(size: self.size)
+        var transition = SKTransition.flipVerticalWithDuration(1.0)
+        //            secondScene.scaleMode = SKSceneScaleMode.AspectFill
+        //            self.scene!.view?.presentScene(secondScene, transition: transition)
         
-        return CGPointMake(CGFloat(randomX), 1024 + holeTexture!.size().height/2.0)
+        if let scene = HomeScene.unarchiveFromFile("HomeScene") as? HomeScene {
+        // Configure the view.
+        let skView = self.view as SKView!
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+        
+        /* Sprite Kit applies additional optimizations to improve rendering performance */
+        skView.ignoresSiblingOrder = true
+        
+        /* Set the scale mode to scale to fit the window */
+        scene.scaleMode = .AspectFill
+        
+        skView.presentScene(scene, transition:transition)
+        
+        }
+        }
+        }*/
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -203,6 +192,12 @@ class GameScene: SKScene {
         }
     }
     
-    
+    func getRandomValue () -> CGPoint{
+        let randomX = arc4random_uniform(446)+175
+        // y coordinate between MinY (top) and MidY (middle):
+        // let randomY = arc4random_uniform(UInt32(self.view!.frame.height))
+        
+        return CGPointMake(CGFloat(randomX), 1024 + holeTexture!.size().height/2.0)
+    }
     
 }
