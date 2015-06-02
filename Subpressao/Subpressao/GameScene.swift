@@ -38,6 +38,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var highScore:Int?
     
+    var waterNode = 20
+    
     override func didMoveToView(view: SKView) {
         
         physicsWorld.contactDelegate = self
@@ -256,7 +258,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if firstBody.categoryBitMask == CollisionCategory.Water.rawValue && secondBody.categoryBitMask == CollisionCategory.Hole.rawValue {
-            firstBody.node?.removeFromParent();
+            firstBody.node?.removeFromParent()
+
+            if liquidNode!.children.count == 0 {
+                
+                var transition = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 1.5)
+                
+                if let scene = GameOverScene.unarchiveFromFile("GameOverScene") as? GameOverScene {
+                    // Configure the view.
+                    let skView = self.view as SKView!
+                    skView.showsFPS = true
+                    skView.showsNodeCount = true
+                    
+                    /* Sprite Kit applies additional optimizations to improve rendering performance */
+                    skView.ignoresSiblingOrder = true
+                    
+                    /* Set the scale mode to scale to fit the window */
+                    scene.scaleMode = .AspectFill
+                    
+                    skView.presentScene(scene, transition:transition)
+                }
+                
+            }
         }
     }
     
