@@ -10,7 +10,14 @@ import SpriteKit
 import UIKit
 import CoreMotion
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
+    
+    enum CollisionCategory:UInt32 {
+        case None = 1
+        case Water = 2
+        case Hole = 4
+        case Boundary = 8
+    }
     
     // Motion manager para uso do Acelerometro
     let motionManager = CMMotionManager()
@@ -31,16 +38,19 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         
-        configureAccelerometer()
+        physicsWorld.contactDelegate = self
         
-        //        let alert = UIAlertView(title: "Você Sabia?", message: "A Sabesp...", delegate: self, cancelButtonTitle: "Jogar")
-        //        alert.show()
+        configureAccelerometer()
         
         waterStartPos = self .childNodeWithName("WaterStartPos")
         
         createWater()
         
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRectMake(245, 0, 277, 1024))
+        self.physicsBody!.categoryBitMask = CollisionCategory.Boundary.rawValue
+        self.physicsBody!.collisionBitMask = CollisionCategory.Water.rawValue
+        self.physicsBody!.contactTestBitMask = CollisionCategory.None.rawValue
+        
         circularBoundary = SKNode()
         circularBoundary?.position = waterStartPos!.position
         let circlePath:CGMutablePathRef!  = CGPathCreateMutable();
@@ -48,6 +58,9 @@ class GameScene: SKScene {
         circularBoundary?.physicsBody = SKPhysicsBody(edgeLoopFromPath: circlePath)
         circularBoundary?.physicsBody!.pinned = true
         self.addChild(circularBoundary!)
+        circularBoundary?.physicsBody!.categoryBitMask = CollisionCategory.Boundary.rawValue
+        circularBoundary?.physicsBody!.collisionBitMask = CollisionCategory.Water.rawValue
+        circularBoundary?.physicsBody!.contactTestBitMask = CollisionCategory.None.rawValue
         
         setImages(SKTexture(imageNamed: "lateral1"), Tex2: SKTexture(imageNamed: "lateral2"), zIndex: 3)
         setImages(SKTexture(imageNamed: "cano1"), Tex2: SKTexture(imageNamed: "cano2"), zIndex: 0)
@@ -128,7 +141,11 @@ class GameScene: SKScene {
             /* Spawn a single bead of liquid */
             let particleNode:SKNode = liquidParticleFactory.createLiquidParticle()
             particleNode.position = getRandomPointInCircle(waterStartPos!.position, withRadius: 50)
-            particleNode.physicsBody!.density = CGFloat(density);
+            particleNode.physicsBody!.density = CGFloat(density)
+            
+            particleNode.physicsBody!.categoryBitMask = CollisionCategory.Water.rawValue
+            particleNode.physicsBody!.collisionBitMask = CollisionCategory.Boundary.rawValue | CollisionCategory.Water.rawValue
+            particleNode.physicsBody!.contactTestBitMask = CollisionCategory.Hole.rawValue
             
             /* Add the particle to the liquid so it will adopt its visual properties */
             liquidNode!.addChild(particleNode)
@@ -196,6 +213,13 @@ class GameScene: SKScene {
         if currentTime > lastSpawn + 1 {
             
             let sprite = SKSpriteNode(texture: holeTexture)
+            sprite.physicsBody = SKPhysicsBody(circleOfRadius: sprite.size.width / 3)
+            sprite.physicsBody!.affectedByGravity = false
+            sprite.physicsBody!.dynamic = false
+            
+            sprite.physicsBody!.categoryBitMask = CollisionCategory.Hole.rawValue
+            sprite.physicsBody!.collisionBitMask = CollisionCategory.None.rawValue
+            sprite.physicsBody!.contactTestBitMask = CollisionCategory.Water.rawValue
             
             sprite.xScale = 0.75
             sprite.yScale = 0.75
@@ -204,6 +228,24 @@ class GameScene: SKScene {
             
             self.addChild(sprite)
             lastSpawn = currentTime
+        }
+    }
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+        
+        var firstBody : SKPhysicsBody
+        var secondBody : SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        if firstBody.categoryBitMask == CollisionCategory.Water.rawValue && secondBody.categoryBitMask == CollisionCategory.Hole.rawValue {
+            firstBody.node?.removeFromParent();
         }
     }
     
