@@ -26,6 +26,8 @@
 		B0DCFE241B0E60960058C763 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0DCFE231B0E60960058C763 /* Images.xcassets */; };
 		B0DCFE271B0E60960058C763 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0DCFE251B0E60960058C763 /* LaunchScreen.xib */; };
 		B0DCFE331B0E60960058C763 /* SubpressaoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DCFE321B0E60960058C763 /* SubpressaoTests.swift */; };
+		B0F6E6521B1EC66800E738A7 /* HighScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F6E6511B1EC66800E738A7 /* HighScore.swift */; };
+		B0F6E6541B1EE3AF00E738A7 /* CutOutJams2-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = B0F6E6531B1EE37B00E738A7 /* CutOutJams2-Regular.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,8 @@
 		B0DCFE2C1B0E60960058C763 /* SubpressaoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubpressaoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0DCFE311B0E60960058C763 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0DCFE321B0E60960058C763 /* SubpressaoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubpressaoTests.swift; sourceTree = "<group>"; };
+		B0F6E6511B1EC66800E738A7 /* HighScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighScore.swift; sourceTree = "<group>"; };
+		B0F6E6531B1EE37B00E738A7 /* CutOutJams2-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CutOutJams2-Regular.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,14 @@
 			name = GameOverScene;
 			sourceTree = "<group>";
 		};
+		B0D14FBE1B1EB1B1005C2400 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B0F6E6531B1EE37B00E738A7 /* CutOutJams2-Regular.otf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		B0DCFE0A1B0E60960058C763 = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +176,8 @@
 		B0DCFE151B0E60960058C763 /* Subpressao */ = {
 			isa = PBXGroup;
 			children = (
+				B0F6E6501B1EC64300E738A7 /* HighScore */,
+				B0D14FBE1B1EB1B1005C2400 /* Fonts */,
 				A5312DA11B1CD2E600C9B2AE /* LiquidKit */,
 				B09231091B13A5E900B89D9F /* HomeScene */,
 				B09231081B13A5D300B89D9F /* GameScene */,
@@ -201,6 +215,14 @@
 				B0DCFE311B0E60960058C763 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B0F6E6501B1EC64300E738A7 /* HighScore */ = {
+			isa = PBXGroup;
+			children = (
+				B0F6E6511B1EC66800E738A7 /* HighScore.swift */,
+			);
+			name = HighScore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,6 +311,7 @@
 				B0DCFE241B0E60960058C763 /* Images.xcassets in Resources */,
 				B0DCFE1B1B0E60960058C763 /* GameScene.sks in Resources */,
 				B09231121B13AE8E00B89D9F /* GameOverScene.sks in Resources */,
+				B0F6E6541B1EE3AF00E738A7 /* CutOutJams2-Regular.otf in Resources */,
 				B0DCFE221B0E60960058C763 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,6 +340,7 @@
 				B0DCFE1F1B0E60960058C763 /* GameViewController.swift in Sources */,
 				B0DCFE191B0E60960058C763 /* AppDelegate.swift in Sources */,
 				A5312DCD1B1CD75E00C9B2AE /* LQKImageUtils+iOSUtils.m in Sources */,
+				B0F6E6521B1EC66800E738A7 /* HighScore.swift in Sources */,
 				A5312DCC1B1CD75E00C9B2AE /* LQKImageUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -450,10 +474,8 @@
 				INFOPLIST_FILE = Subpressao/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-
 				SWIFT_OBJC_BRIDGING_HEADER = "Subpressao/Subpressao-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -466,9 +488,7 @@
 				INFOPLIST_FILE = Subpressao/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-
 				SWIFT_OBJC_BRIDGING_HEADER = "Subpressao/Subpressao-Bridging-Header.h";
-
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

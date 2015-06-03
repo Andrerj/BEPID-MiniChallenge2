@@ -10,6 +10,9 @@ import SpriteKit
 
 class GameOverScene: SKScene{
     
+    var gameScene = GameScene()
+    var score = 0
+    var highScore = 0
 
 //size compartilhe
 //X:356,339 Y:80,048
@@ -23,8 +26,22 @@ class GameOverScene: SKScene{
 
 //position
 //X:386,514 Y:395,824
-
-
+    
+    var pontos: SKLabelNode?
+    var recorde: SKLabelNode?
+    
+    override func didMoveToView(view: SKView) {
+        
+        pontos = self.childNodeWithName("PontosLabel") as! SKLabelNode!
+        pontos?.text = "\(gameScene.score / 10)"
+        pontos?.fontName = "CutOutJams2-Regular"
+        
+        recorde = self.childNodeWithName("RecordeLabel") as! SKLabelNode!
+        recorde?.text = "\(gameScene.recorde / 10)"
+        recorde?.fontName = "CutOutJams2-Regular"
+    }
+    
+    
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         var touch: UITouch = touches.first as! UITouch
         var location = touch.locationInNode(self)

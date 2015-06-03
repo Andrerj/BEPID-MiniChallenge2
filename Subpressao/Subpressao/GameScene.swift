@@ -39,15 +39,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var score:Int = 0
     var scoreLabel:SKLabelNode?
+    var highScore = HighScore()
+    var recorde:Int = 0
     
     override func didMoveToView(view: SKView) {
         
         physicsWorld.contactDelegate = self
         
         configureAccelerometer()
-        
         waterStartPos = self .childNodeWithName("WaterStartPos")
         scoreLabel = self.childNodeWithName("ScoreLabel") as! SKLabelNode!
+        scoreLabel?.fontName = "CutOutJams2-Regular"
         
         createWater()
         
@@ -280,6 +282,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     /* Set the scale mode to scale to fit the window */
                     scene.scaleMode = .AspectFill
+                    
+                    //pass values to GameOverScene
+                    
+                    highScore.highScore = 10000
+                    SaveHighScore().ArchiveHighScore(highScore: highScore)
+                    var retrievedHighScore = SaveHighScore().RetrieveHighScore() as! HighScore
+                    
+                    if score > retrievedHighScore.highScore {
+                        retrievedHighScore.highScore = score
+                    }
+                    recorde = retrievedHighScore.highScore
+                    
+                    println(recorde)
+                    scene.gameScene = self
+                    scene.score = score
+                    scene.highScore = recorde
                     
                     skView.presentScene(scene, transition:transition)
                 }

@@ -43,6 +43,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         if let scene = HomeScene.unarchiveFromFile("HomeScene") as? HomeScene {
             // Configure the view.
             let skView = self.view as! SKView
