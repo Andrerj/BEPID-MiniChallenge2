@@ -61,6 +61,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         audioPlayer.prepareToPlay()
         audioPlayer.play()
         
+        
         physicsWorld.contactDelegate = self
         
         configureAccelerometer()
@@ -94,6 +95,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         holeTexture = SKTexture(imageNamed:"hole")
     }
+
+    
     
     func setImages(Tex: SKTexture, Tex2: SKTexture, zIndex: Int){
         
