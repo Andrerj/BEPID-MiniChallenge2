@@ -235,7 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score = Int((currentTime - firstUpdate) * 10);
         scoreLabel?.text = "\(Double(score)/10.0) metros";
         
-        if currentTime > lastSpawn + 1 {
+        if Float(currentTime) > Float(lastSpawn) + 1.0 - (1.0 - (Float(liquidNode!.children.count)/Float(self.WATER_COUNT)))/2.0 {
             
             let sprite = SKSpriteNode(texture: holeTexture)
             sprite.physicsBody = SKPhysicsBody(circleOfRadius: sprite.size.width / 3)
