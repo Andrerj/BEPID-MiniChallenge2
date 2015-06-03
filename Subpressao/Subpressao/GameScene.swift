@@ -9,6 +9,7 @@
 import SpriteKit
 import UIKit
 import CoreMotion
+import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -18,6 +19,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case Hole = 4
         case Boundary = 8
     }
+    
+    // AudioPlayer
+    var audioPlayer = AVAudioPlayer()
     
     // Motion manager para uso do Acelerometro
     let motionManager = CMMotionManager()
@@ -47,6 +51,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var moveAndLoopSprites = [SKSpriteNode]()
     
     override func didMoveToView(view: SKView) {
+        
+        
+        var music = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("1-08 Puzzles", ofType: "mp3")!)
+        println(music)
+        
+        var error:NSError?
+        audioPlayer = AVAudioPlayer(contentsOfURL: music, error: &error)
+        audioPlayer.prepareToPlay()
+        audioPlayer.play()
         
         physicsWorld.contactDelegate = self
         
@@ -166,13 +179,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(liquidNode!)
     }
     
-    func placar(){
-        
-        let prefs = NSUserDefaults.standardUserDefaults()
-        prefs.setValue("Berlin", forKey: "userCity")
-        //This code saves the value "Berlin" to a key named "userCity".
-    
-    }
 
     
     func getRandomPointInCircle(cCenter:(CGPoint), withRadius cRadius:(CGFloat)) -> CGPoint {
@@ -282,6 +288,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             firstBody.node?.removeFromParent()
             
             if liquidNode!.children.count == 0 {
+                
+                audioPlayer.stop()
                 
                 var transition = SKTransition.pushWithDirection(SKTransitionDirection.Down, duration: 1.5)
                 

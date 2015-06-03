@@ -28,6 +28,7 @@
 		B0DCFE331B0E60960058C763 /* SubpressaoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DCFE321B0E60960058C763 /* SubpressaoTests.swift */; };
 		B0F6E6521B1EC66800E738A7 /* HighScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F6E6511B1EC66800E738A7 /* HighScore.swift */; };
 		B0F6E6541B1EE3AF00E738A7 /* CutOutJams2-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = B0F6E6531B1EE37B00E738A7 /* CutOutJams2-Regular.otf */; };
+		E29659731B1F8D780049BCCB /* 1-08 Puzzles.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E29659721B1F8D780049BCCB /* 1-08 Puzzles.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		B0DCFE321B0E60960058C763 /* SubpressaoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubpressaoTests.swift; sourceTree = "<group>"; };
 		B0F6E6511B1EC66800E738A7 /* HighScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighScore.swift; sourceTree = "<group>"; };
 		B0F6E6531B1EE37B00E738A7 /* CutOutJams2-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CutOutJams2-Regular.otf"; sourceTree = "<group>"; };
+		E29659721B1F8D780049BCCB /* 1-08 Puzzles.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "1-08 Puzzles.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				B0DCFE1A1B0E60960058C763 /* GameScene.sks */,
+				E29659721B1F8D780049BCCB /* 1-08 Puzzles.mp3 */,
 				B0DCFE1C1B0E60960058C763 /* GameScene.swift */,
 			);
 			name = GameScene;
@@ -311,6 +314,7 @@
 				B0DCFE241B0E60960058C763 /* Images.xcassets in Resources */,
 				B0DCFE1B1B0E60960058C763 /* GameScene.sks in Resources */,
 				B09231121B13AE8E00B89D9F /* GameOverScene.sks in Resources */,
+				E29659731B1F8D780049BCCB /* 1-08 Puzzles.mp3 in Resources */,
 				B0F6E6541B1EE3AF00E738A7 /* CutOutJams2-Regular.otf in Resources */,
 				B0DCFE221B0E60960058C763 /* Main.storyboard in Resources */,
 			);
