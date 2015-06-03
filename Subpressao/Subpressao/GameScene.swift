@@ -39,7 +39,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var score:Int = 0
     var scoreLabel:SKLabelNode?
-    var highScore = HighScore()
     var recorde:Int = 0
     
     override func didMoveToView(view: SKView) {
@@ -274,8 +273,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if let scene = GameOverScene.unarchiveFromFile("GameOverScene") as? GameOverScene {
                     // Configure the view.
                     let skView = self.view as SKView!
-                    skView.showsFPS = true
-                    skView.showsNodeCount = true
                     
                     /* Sprite Kit applies additional optimizations to improve rendering performance */
                     skView.ignoresSiblingOrder = true
@@ -285,14 +282,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     //pass values to GameOverScene
                     
-                    highScore.highScore = 0
-                    SaveHighScore().ArchiveHighScore(highScore: highScore)
-                    var retrievedHighScore = SaveHighScore().RetrieveHighScore() as! HighScore
+                    var highScore = SaveHighScore().RetrieveHighScore() as! HighScore
                     
-                    if score > retrievedHighScore.highScore {
-                        retrievedHighScore.highScore = score
+                    println("Score salvo: \(highScore.highScore)")
+                    
+                    if score > highScore.highScore {
+                        highScore.highScore = score
+                        SaveHighScore().ArchiveHighScore(highScore: highScore)
+                        highScore = SaveHighScore().RetrieveHighScore() as! HighScore
+                        highScore.highScore = score
+                        
                     }
-                    recorde = retrievedHighScore.highScore
+                    recorde = highScore.highScore
                     
                     println(recorde)
                     scene.gameScene = self
