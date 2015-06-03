@@ -41,6 +41,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabel:SKLabelNode?
     var recorde:Int = 0
     
+    let WATER_COUNT = 30
+    
+    var moveAndDestroySprites = [SKSpriteNode]()
+    var moveAndLoopSprites = [SKSpriteNode]()
+    
     override func didMoveToView(view: SKView) {
         
         physicsWorld.contactDelegate = self
@@ -102,6 +107,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             backgroundPiece.position = CGPoint(x: self.frame.size.width / 2.0, y: CGFloat(i) * (backTex2.size().height * scaleValue))
             backgroundPiece.zPosition = CGFloat(zIndex)
             backgroundPiece.runAction(moveSkySpritesForever)
+            moveAndLoopSprites.append(backgroundPiece)
             
             backgroundNode.addChild(backgroundPiece)
             
@@ -143,7 +149,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Create a particle factory that can produce optimized particles of a given size */
         let liquidParticleFactory:LQKLiquidParticleFactory = LQKLiquidParticleFactory(radius: CGFloat(radius))
         
-        for i in 0..<30 {
+        for i in 0..<WATER_COUNT {
             /* Spawn a single bead of liquid */
             let particleNode:SKNode = liquidParticleFactory.createLiquidParticle()
             particleNode.position = getRandomPointInCircle(waterStartPos!.position, withRadius: 50)
@@ -244,9 +250,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             sprite.yScale = 0.75
             sprite.position = getRandomValue()
             sprite.runAction(moveSpriteAndDestroy)
+            moveAndDestroySprites.append(sprite)
             
             self.addChild(sprite)
             lastSpawn = currentTime
+        }
+        
+        for node in moveAndLoopSprites {
+            node.runAction(SKAction.speedTo(CGFloat(CGFloat(2) - CGFloat(liquidNode!.children.count)/CGFloat(self.WATER_COUNT)), duration: 0))
+        }
+        
+        for node in moveAndDestroySprites {
+            node.runAction(SKAction.speedTo(CGFloat(CGFloat(2) - CGFloat(liquidNode!.children.count)/CGFloat(self.WATER_COUNT)), duration: 0))
         }
     }
     
@@ -265,7 +280,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if firstBody.categoryBitMask == CollisionCategory.Water.rawValue && secondBody.categoryBitMask == CollisionCategory.Hole.rawValue {
             firstBody.node?.removeFromParent()
-
+            
             if liquidNode!.children.count == 0 {
                 
                 var transition = SKTransition.pushWithDirection(SKTransitionDirection.Down, duration: 1.5)
