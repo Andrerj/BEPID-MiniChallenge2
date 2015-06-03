@@ -129,7 +129,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createWater() {
         let width = 16;
         let density = 1;
-        let blurRadius = 16;
+        let blurRadius = 12;
         let radius = 8;
         
         /* Create a texturing strategy for the liquid -- built-in, or on your own */
@@ -144,7 +144,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Create a particle factory that can produce optimized particles of a given size */
         let liquidParticleFactory:LQKLiquidParticleFactory = LQKLiquidParticleFactory(radius: CGFloat(radius))
         
-        for i in 0..<20 {
+        for i in 0..<30 {
             /* Spawn a single bead of liquid */
             let particleNode:SKNode = liquidParticleFactory.createLiquidParticle()
             particleNode.position = getRandomPointInCircle(waterStartPos!.position, withRadius: 50)
@@ -285,7 +285,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     //pass values to GameOverScene
                     
-                    highScore.highScore = 10000
+                    highScore.highScore = 0
                     SaveHighScore().ArchiveHighScore(highScore: highScore)
                     var retrievedHighScore = SaveHighScore().RetrieveHighScore() as! HighScore
                     
