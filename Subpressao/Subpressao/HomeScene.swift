@@ -8,11 +8,13 @@
 
 import SpriteKit
 
+var musicSounds = MusicSounds ()
+
 class HomeScene: SKScene {
     
     
     override func didMoveToView(view: SKView) {
-        
+        musicSounds.playMusic("small_fountain")
         
         
       
@@ -25,10 +27,14 @@ class HomeScene: SKScene {
         // If previous button is touched, start transition to previous scene
         
         if (node.name == "btnJogar") {
+            
+            
             //            var gameScene = GameScene(size: self.size)
             var transition = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 1.5)
             //            gameScene.scaleMode = SKSceneScaleMode.AspectFill
             //            self.scene!.view?.presentScene(gameScene, transition: transition)
+            
+            musicSounds.audioPlayer.stop()
             
             if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
                 // Configure the view.

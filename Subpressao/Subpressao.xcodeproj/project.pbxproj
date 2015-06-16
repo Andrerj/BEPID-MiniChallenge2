@@ -30,6 +30,7 @@
 		B0F6E6541B1EE3AF00E738A7 /* CutOutJams2-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = B0F6E6531B1EE37B00E738A7 /* CutOutJams2-Regular.otf */; };
 		E203F5C21B1F98BA0038BB73 /* bubble.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E203F5C11B1F98BA0038BB73 /* bubble.mp3 */; };
 		E203F5C41B1F98C10038BB73 /* small_fountain.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E203F5C31B1F98C10038BB73 /* small_fountain.mp3 */; };
+		E20B83231B2F6CDB0026DB6B /* MusicSounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B83221B2F6CDB0026DB6B /* MusicSounds.swift */; };
 		E29659731B1F8D780049BCCB /* 1-08 Puzzles.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E29659721B1F8D780049BCCB /* 1-08 Puzzles.mp3 */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,7 @@
 		B0F6E6531B1EE37B00E738A7 /* CutOutJams2-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CutOutJams2-Regular.otf"; sourceTree = "<group>"; };
 		E203F5C11B1F98BA0038BB73 /* bubble.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bubble.mp3; sourceTree = "<group>"; };
 		E203F5C31B1F98C10038BB73 /* small_fountain.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = small_fountain.mp3; sourceTree = "<group>"; };
+		E20B83221B2F6CDB0026DB6B /* MusicSounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSounds.swift; sourceTree = "<group>"; };
 		E29659721B1F8D780049BCCB /* 1-08 Puzzles.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "1-08 Puzzles.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -187,6 +189,7 @@
 			children = (
 				B0F6E6501B1EC64300E738A7 /* HighScore */,
 				B0D14FBE1B1EB1B1005C2400 /* Fonts */,
+				E20B831D1B2F6C200026DB6B /* Sounds and Music */,
 				A5312DA11B1CD2E600C9B2AE /* LiquidKit */,
 				B09231091B13A5E900B89D9F /* HomeScene */,
 				B09231081B13A5D300B89D9F /* GameScene */,
@@ -232,6 +235,14 @@
 				B0F6E6511B1EC66800E738A7 /* HighScore.swift */,
 			);
 			name = HighScore;
+			sourceTree = "<group>";
+		};
+		E20B831D1B2F6C200026DB6B /* Sounds and Music */ = {
+			isa = PBXGroup;
+			children = (
+				E20B83221B2F6CDB0026DB6B /* MusicSounds.swift */,
+			);
+			name = "Sounds and Music";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -347,6 +358,7 @@
 				A5312DD01B1CD75E00C9B2AE /* LQKSolidColorEffect.m in Sources */,
 				B09231101B13AE3100B89D9F /* GameOverScene.swift in Sources */,
 				B0DCFE1D1B0E60960058C763 /* GameScene.swift in Sources */,
+				E20B83231B2F6CDB0026DB6B /* MusicSounds.swift in Sources */,
 				A5312DCB1B1CD75E00C9B2AE /* LQKCILiquidFilter.m in Sources */,
 				B092310C1B13A65400B89D9F /* HomeScene.swift in Sources */,
 				B0DCFE1F1B0E60960058C763 /* GameViewController.swift in Sources */,

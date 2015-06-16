@@ -9,7 +9,9 @@
 import SpriteKit
 import UIKit
 import CoreMotion
-import AVFoundation
+//import AVFoundation
+
+
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -21,7 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // AudioPlayer
-    var audioPlayer = AVAudioPlayer()
+   // var audioPlayer = AVAudioPlayer()
     
     // Motion manager para uso do Acelerometro
     let motionManager = CMMotionManager()
@@ -49,17 +51,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var moveAndDestroySprites = [SKSpriteNode]()
     var moveAndLoopSprites = [SKSpriteNode]()
+    var musicSounds = MusicSounds ()
+    
+    var gamePaused:Bool = false
+    var teste: SKSpriteNode?
     
     override func didMoveToView(view: SKView) {
         
+//        var music = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("1-08 Puzzles", ofType: "mp3")!)
+//        println(music)
+//        
+//        var error:NSError?
+//        audioPlayer = AVAudioPlayer(contentsOfURL: music, error: &error)
+//        audioPlayer.prepareToPlay()
+//        audioPlayer.play()
+       
         
-        var music = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("1-08 Puzzles", ofType: "mp3")!)
-        println(music)
-        
-        var error:NSError?
-        audioPlayer = AVAudioPlayer(contentsOfURL: music, error: &error)
-        audioPlayer.prepareToPlay()
-        audioPlayer.play()
+        //toca musica
+        musicSounds.playMusic("1-08 Puzzles")
         
         
         physicsWorld.contactDelegate = self
@@ -94,6 +103,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //629,385
         
         holeTexture = SKTexture(imageNamed:"hole")
+        
+  
     }
 
     
@@ -196,38 +207,50 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return CGPointMake(CGFloat(x), CGFloat(y));
     }
     
+//    func playSoundMusic(sound:(String), set:(String)) -> Bool{
+//        var music = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(sound, ofType: "mp3")!)
+//        println(music)
+//        
+//        var error:NSError?
+//        audioPlayer = AVAudioPlayer(contentsOfURL: music, error: &error)
+//        if set == "play" {
+//            audioPlayer.prepareToPlay()
+//            return audioPlayer.play()
+//        }
+//        else {
+//            return false
+//    
+//        }
+//    }
+    
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        
-        /* override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         
         var touch: UITouch = touches.first as! UITouch
         var location = touch.locationInNode(self)
         var node = self.nodeAtPoint(location)
         
-        // If next button is touched, start transition to second scene
-        if (node.name == "previousbutton") {
-        //            var secondScene = SecondScene(size: self.size)
-        var transition = SKTransition.flipVerticalWithDuration(1.0)
-        //            secondScene.scaleMode = SKSceneScaleMode.AspectFill
-        //            self.scene!.view?.presentScene(secondScene, transition: transition)
+        // If previous button is touched, start transition to previous scene
         
-        if let scene = HomeScene.unarchiveFromFile("HomeScene") as? HomeScene {
-        // Configure the view.
-        let skView = self.view as SKView!
-        skView.showsFPS = true
-        skView.showsNodeCount = true
-        
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
-        skView.ignoresSiblingOrder = true
-        
-        /* Set the scale mode to scale to fit the window */
-        scene.scaleMode = .AspectFill
-        
-        skView.presentScene(scene, transition:transition)
-        
+        if (node.name == "tela_2_pause") {
+            teste = self.childNodeWithName("tela_2_pause") as! SKSpriteNode!
+            
+            if(gamePaused == false){
+                teste?.hidden = true
+            }
+            else {
+                teste?.hidden = false
+            }
+            
+           
+           
+            
+            
         }
-        }
-        }*/
+    }
+    
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        
+        pauseGame(gamePaused)
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -246,7 +269,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if Float(currentTime) > Float(lastSpawn) + 1.0 - (1.0 - (Float(liquidNode!.children.count)/Float(self.WATER_COUNT)))/2.0 {
             
-            let sprite = SKSpriteNode(texture: holeTexture)
+            //println(self.holeTexture)
+            
+            let sprite = SKSpriteNode(texture: SKTexture(imageNamed:"hole"))
             sprite.physicsBody = SKPhysicsBody(circleOfRadius: sprite.size.width / 3)
             sprite.physicsBody!.affectedByGravity = false
             sprite.physicsBody!.dynamic = false
@@ -261,7 +286,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             sprite.runAction(moveSpriteAndDestroy)
             moveAndDestroySprites.append(sprite)
             
-            self.addChild(sprite)
+            //self.addChild(sprite)
             lastSpawn = currentTime
         }
         
@@ -289,10 +314,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if firstBody.categoryBitMask == CollisionCategory.Water.rawValue && secondBody.categoryBitMask == CollisionCategory.Hole.rawValue {
             firstBody.node?.removeFromParent()
+           
+//            let soundfile = SKAction.playSoundFileNamed("bubble.mp3", waitForCompletion: false)
+//            runAction(soundfile)
             
             if liquidNode!.children.count == 0 {
                 
-                audioPlayer.stop()
+                musicSounds.audioPlayer.stop()
+                
                 
                 var transition = SKTransition.pushWithDirection(SKTransitionDirection.Down, duration: 1.5)
                 
@@ -331,6 +360,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
             }
         }
+    }
+    
+    func pauseGame(set:Bool) -> Bool
+    {
+      
+        if(set == false){
+            self.scene!.view!.paused = true
+            gamePaused = true
+            
+        
+        }
+        
+        else if(set == true){
+            self.scene!.view!.paused = false
+            gamePaused = false
+           
+        }
+        
+        return gamePaused
+
     }
     
     func getWaterAveragePosition() -> CGPoint {
