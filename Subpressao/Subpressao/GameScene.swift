@@ -286,7 +286,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             sprite.runAction(moveSpriteAndDestroy)
             moveAndDestroySprites.append(sprite)
             
-            //self.addChild(sprite)
+            self.addChild(sprite)
             lastSpawn = currentTime
         }
         
