@@ -22,8 +22,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case Boundary = 8
     }
     
-   
-    
     // Motion manager para uso do Acelerometro
     let motionManager = CMMotionManager()
     
@@ -38,11 +36,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var moveSpriteAndDestroy: SKAction?
     var lastSpawn:CFTimeInterval = 0;
-    var firstUpdate:CFTimeInterval = 0;
+    var lastUpdate:CFTimeInterval = 0;
     
     var holeTexture:SKTexture?
     
-    var score:Int = 0
+    var score:Double = 0
     var scoreLabel:SKLabelNode?
     var recorde:Int = 0
     
@@ -60,15 +58,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView) {
         
-
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: ("pauseGame") , name: UIApplicationDidEnterBackgroundNotification, object: nil)
        
         //toca musica
      
         musicSounds.playMusic("1-08 Puzzles")
         
        
-        
-        
         physicsWorld.contactDelegate = self
         
         configureAccelerometer()
@@ -104,9 +100,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(pausePopup)
         
+        
   
     }
-
     
     
     func setImages(Tex: SKTexture, Tex2: SKTexture, zIndex: Int){
@@ -207,8 +203,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return CGPointMake(CGFloat(x), CGFloat(y));
     }
     
-
-    
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         
         var touch: UITouch = touches.first as! UITouch
@@ -283,11 +277,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 pauseGame()
                 
-                for child in (SKScene.unarchiveFromFile("PauseScene"))!.children {
-                
-                    pausePopup.addChild((child.copy()) as! SKNode)
-                }
-                
                 
             }
 //            else {
@@ -350,6 +339,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(currentTime: CFTimeInterval) {
+        
         if (!gamePaused){
             /* Called before each frame is rendered */
             
@@ -357,12 +347,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             circularBoundary?.position = averageWater
             
             if lastSpawn == 0 {
-                firstUpdate = currentTime
+                lastUpdate = currentTime
                 lastSpawn = currentTime
+                scoreLabel?.text = "0.0 metros";
+                return;
             }
             
-            score = Int((currentTime - firstUpdate) * 10);
-            scoreLabel?.text = "\(Double(score)/10.0) metros";
+            score += (currentTime - lastUpdate) * 10;
+            scoreLabel?.text = "\(Double(Int(score))/10.0) metros";
             
             if Float(currentTime) > Float(lastSpawn) + 1.0 - (1.0 - (Float(liquidNode!.children.count)/Float(self.WATER_COUNT)))/2.0 {
                 
@@ -379,6 +371,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 sprite.xScale = 0.75
                 sprite.yScale = 0.75
+                sprite.zPosition = 1
                 sprite.position = getRandomValue()
                 sprite.runAction(moveSpriteAndDestroy)
                 moveAndDestroySprites.append(sprite)
@@ -400,10 +393,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             gamePaused = false
             shouldUnpause = false
             lastSpawn = currentTime
+            lastUpdate = currentTime
             
         }
         
+        lastUpdate = currentTime
+        
     }
+    
     func didBeginContact(contact: SKPhysicsContact) {
         
         var firstBody : SKPhysicsBody
@@ -447,18 +444,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     println("Score salvo: \(highScore.highScore)")
                     
-                    if score > highScore.highScore {
-                        highScore.highScore = score
+                    if Int(score) > highScore.highScore {
+                        highScore.highScore = Int(score)
                         SaveHighScore().ArchiveHighScore(highScore: highScore)
                         highScore = SaveHighScore().RetrieveHighScore() as! HighScore
-                        highScore.highScore = score
+                        highScore.highScore = Int(score)
                         
                     }
                     recorde = highScore.highScore
                     
                     println(recorde)
                     scene.gameScene = self
-                    scene.score = score
+                    scene.score = Int(score)
                     scene.highScore = recorde
                     
                     skView.presentScene(scene, transition:transition)
@@ -472,6 +469,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         
         if(!gamePaused){
+            
+            for child in (SKScene.unarchiveFromFile("PauseScene"))!.children {
+                
+                pausePopup.addChild((child.copy()) as! SKNode)
+            }
+            
             self.scene!.runAction(SKAction.speedTo(0, duration: 0))
             
             gamePaused = true
