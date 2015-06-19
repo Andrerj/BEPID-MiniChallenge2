@@ -32,6 +32,8 @@
 		E203F5C41B1F98C10038BB73 /* small_fountain.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E203F5C31B1F98C10038BB73 /* small_fountain.mp3 */; };
 		E20B83231B2F6CDB0026DB6B /* MusicSounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B83221B2F6CDB0026DB6B /* MusicSounds.swift */; };
 		E29659731B1F8D780049BCCB /* 1-08 Puzzles.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E29659721B1F8D780049BCCB /* 1-08 Puzzles.mp3 */; };
+		E2C6DC231B322EC2009F420D /* PauseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C6DC221B322EC2009F420D /* PauseScene.swift */; };
+		E2C6DC251B322F01009F420D /* PauseScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = E2C6DC241B322F01009F420D /* PauseScene.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +86,8 @@
 		E203F5C31B1F98C10038BB73 /* small_fountain.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = small_fountain.mp3; sourceTree = "<group>"; };
 		E20B83221B2F6CDB0026DB6B /* MusicSounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSounds.swift; sourceTree = "<group>"; };
 		E29659721B1F8D780049BCCB /* 1-08 Puzzles.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "1-08 Puzzles.mp3"; sourceTree = "<group>"; };
+		E2C6DC221B322EC2009F420D /* PauseScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseScene.swift; sourceTree = "<group>"; };
+		E2C6DC241B322F01009F420D /* PauseScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PauseScene.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +191,7 @@
 		B0DCFE151B0E60960058C763 /* Subpressao */ = {
 			isa = PBXGroup;
 			children = (
+				E2C6DC211B322E7A009F420D /* PauseScene */,
 				B0F6E6501B1EC64300E738A7 /* HighScore */,
 				B0D14FBE1B1EB1B1005C2400 /* Fonts */,
 				E20B831D1B2F6C200026DB6B /* Sounds and Music */,
@@ -243,6 +248,15 @@
 				E20B83221B2F6CDB0026DB6B /* MusicSounds.swift */,
 			);
 			name = "Sounds and Music";
+			sourceTree = "<group>";
+		};
+		E2C6DC211B322E7A009F420D /* PauseScene */ = {
+			isa = PBXGroup;
+			children = (
+				E2C6DC241B322F01009F420D /* PauseScene.sks */,
+				E2C6DC221B322EC2009F420D /* PauseScene.swift */,
+			);
+			name = PauseScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0DCFE271B0E60960058C763 /* LaunchScreen.xib in Resources */,
+				E2C6DC251B322F01009F420D /* PauseScene.sks in Resources */,
 				E203F5C41B1F98C10038BB73 /* small_fountain.mp3 in Resources */,
 				B092310E1B13ADE100B89D9F /* HomeScene.sks in Resources */,
 				E203F5C21B1F98BA0038BB73 /* bubble.mp3 in Resources */,
@@ -360,6 +375,7 @@
 				B0DCFE1D1B0E60960058C763 /* GameScene.swift in Sources */,
 				E20B83231B2F6CDB0026DB6B /* MusicSounds.swift in Sources */,
 				A5312DCB1B1CD75E00C9B2AE /* LQKCILiquidFilter.m in Sources */,
+				E2C6DC231B322EC2009F420D /* PauseScene.swift in Sources */,
 				B092310C1B13A65400B89D9F /* HomeScene.swift in Sources */,
 				B0DCFE1F1B0E60960058C763 /* GameViewController.swift in Sources */,
 				B0DCFE191B0E60960058C763 /* AppDelegate.swift in Sources */,

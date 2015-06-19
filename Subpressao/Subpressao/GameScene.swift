@@ -9,7 +9,7 @@
 import SpriteKit
 import UIKit
 import CoreMotion
-//import AVFoundation
+
 
 
 
@@ -22,8 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case Boundary = 8
     }
     
-    // AudioPlayer
-   // var audioPlayer = AVAudioPlayer()
+   
     
     // Motion manager para uso do Acelerometro
     let motionManager = CMMotionManager()
@@ -54,21 +53,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var musicSounds = MusicSounds ()
     
     var gamePaused:Bool = false
+    var shouldUnpause:Bool = false
     var teste: SKSpriteNode?
+    
+    var pausePopup:SKNode = SKNode()
     
     override func didMoveToView(view: SKView) {
         
-//        var music = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("1-08 Puzzles", ofType: "mp3")!)
-//        println(music)
-//        
-//        var error:NSError?
-//        audioPlayer = AVAudioPlayer(contentsOfURL: music, error: &error)
-//        audioPlayer.prepareToPlay()
-//        audioPlayer.play()
+
        
-        
         //toca musica
+     
         musicSounds.playMusic("1-08 Puzzles")
+        
+       
         
         
         physicsWorld.contactDelegate = self
@@ -103,6 +101,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //629,385
         
         holeTexture = SKTexture(imageNamed:"hole")
+        
+        self.addChild(pausePopup)
         
   
     }
@@ -207,21 +207,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return CGPointMake(CGFloat(x), CGFloat(y));
     }
     
-//    func playSoundMusic(sound:(String), set:(String)) -> Bool{
-//        var music = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(sound, ofType: "mp3")!)
-//        println(music)
-//        
-//        var error:NSError?
-//        audioPlayer = AVAudioPlayer(contentsOfURL: music, error: &error)
-//        if set == "play" {
-//            audioPlayer.prepareToPlay()
-//            return audioPlayer.play()
-//        }
-//        else {
-//            return false
-//    
-//        }
-//    }
+
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         
@@ -233,16 +219,50 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (node.name == "tela_2_pause") {
             teste = self.childNodeWithName("tela_2_pause") as! SKSpriteNode!
-            
+            println(teste?.name)
+            //troca imagem
             if(gamePaused == false){
                 teste?.hidden = true
+                
+            }
+//            else {
+//                teste?.hidden = false
+//                
+//            }
+            
+        }
+        
+        if (node.name == "botao_musica_on") {
+            pause = self.childNodeWithName("botao_musica_on") as! SKSpriteNode!
+            println(pause?.name)
+            //troca imagem
+            if(pause?.hidden == false) {
+                pause?.hidden = true
+                musicSounds.audioPlayer.stop()
+            
             }
             else {
-                teste?.hidden = false
+                pause?.hidden = false
+                musicSounds.audioPlayer.play()
             }
+        }
+        
+        if (node.name == "botao_continuar_select") {
+            continuar = self.childNodeWithName("botao_continuar_select") as! SKSpriteNode!
+            println(continuar?.name)
             
-           
-           
+            //troca imagem
+            continuar?.hidden = true
+            
+        }
+        
+        if (node.name == "botao_reiniciar_select") {
+            Reiniciar = self.childNodeWithName("botao_reiniciar_select") as! SKSpriteNode!
+            println(Reiniciar?.name)
+            //troca imagem
+            
+            Reiniciar?.hidden = true
+            
             
             
         }
@@ -250,55 +270,135 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         
-        pauseGame(gamePaused)
+        var touch: UITouch = touches.first as! UITouch
+        var location = touch.locationInNode(self)
+        var node = self.nodeAtPoint(location)
+        
+        if (node.name == "tela_2_pause") {
+            teste = self.childNodeWithName("tela_2_pause") as! SKSpriteNode!
+            
+
+            //pausa jogo
+            if(gamePaused == false){
+                
+                pauseGame()
+                
+                for child in (SKScene.unarchiveFromFile("PauseScene"))!.children {
+                
+                    pausePopup.addChild((child.copy()) as! SKNode)
+                }
+                
+                
+            }
+//            else {
+//                
+//                pauseGame(gamePaused)
+//            }
+        }
+        
+        if (node.name == "botao_reiniciar_select") {
+            Reiniciar = self.childNodeWithName("botao_reiniciar_select") as! SKSpriteNode!
+            println(Reiniciar?.name)
+            //troca imagem
+            
+            Reiniciar?.hidden = false
+            
+            musicSounds.audioPlayer.stop()
+            
+            
+            
+            // var transition = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 1.5)
+            var transition = SKTransition.fadeWithDuration(1.5)
+            
+            if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
+                // Configure the view.
+                let skView = self.view as SKView!
+                
+                /* Sprite Kit applies additional optimizations to improve rendering performance */
+                skView.ignoresSiblingOrder = true
+                
+                /* Set the scale mode to scale to fit the window */
+                scene.scaleMode = .AspectFill
+                
+                skView.presentScene(scene, transition:transition)
+            }
+        }
+        
+        if (node.name == "botao_continuar_select") {
+            continuar = self.childNodeWithName("botao_continuar_select") as! SKSpriteNode!
+            println(continuar?.name)
+            
+            //troca imagem
+            continuar?.hidden = false
+            
+            pauseGame()
+
+            for child in pausePopup.children {
+                
+                
+                child.removeFromParent()
+                teste?.hidden = false
+
+                
+            }
+        }
     }
     
     override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
-        
-        let averageWater = getWaterAveragePosition()
-        circularBoundary?.position = averageWater
-        
-        if lastSpawn == 0 {
-            firstUpdate = currentTime
+        if (!gamePaused){
+            /* Called before each frame is rendered */
+            
+            let averageWater = getWaterAveragePosition()
+            circularBoundary?.position = averageWater
+            
+            if lastSpawn == 0 {
+                firstUpdate = currentTime
+                lastSpawn = currentTime
+            }
+            
+            score = Int((currentTime - firstUpdate) * 10);
+            scoreLabel?.text = "\(Double(score)/10.0) metros";
+            
+            if Float(currentTime) > Float(lastSpawn) + 1.0 - (1.0 - (Float(liquidNode!.children.count)/Float(self.WATER_COUNT)))/2.0 {
+                
+                //println(self.holeTexture)
+                
+                let sprite = SKSpriteNode(texture: SKTexture(imageNamed:"hole"))
+                sprite.physicsBody = SKPhysicsBody(circleOfRadius: sprite.size.width / 3)
+                sprite.physicsBody!.affectedByGravity = false
+                sprite.physicsBody!.dynamic = false
+                
+                sprite.physicsBody!.categoryBitMask = CollisionCategory.Hole.rawValue
+                sprite.physicsBody!.collisionBitMask = CollisionCategory.None.rawValue
+                sprite.physicsBody!.contactTestBitMask = CollisionCategory.Water.rawValue
+                
+                sprite.xScale = 0.75
+                sprite.yScale = 0.75
+                sprite.position = getRandomValue()
+                sprite.runAction(moveSpriteAndDestroy)
+                moveAndDestroySprites.append(sprite)
+                
+                self.addChild(sprite)
+                lastSpawn = currentTime
+            }
+            
+            for node in moveAndLoopSprites {
+                node.runAction(SKAction.speedTo(CGFloat(CGFloat(2) - CGFloat(liquidNode!.children.count)/CGFloat(self.WATER_COUNT)), duration: 0))
+            }
+            
+            for node in moveAndDestroySprites {
+                node.runAction(SKAction.speedTo(CGFloat(CGFloat(2) - CGFloat(liquidNode!.children.count)/CGFloat(self.WATER_COUNT)), duration: 0))
+            }
+            
+        }
+        if shouldUnpause {
+            gamePaused = false
+            shouldUnpause = false
             lastSpawn = currentTime
+            
         }
         
-        score = Int((currentTime - firstUpdate) * 10);
-        scoreLabel?.text = "\(Double(score)/10.0) metros";
-        
-        if Float(currentTime) > Float(lastSpawn) + 1.0 - (1.0 - (Float(liquidNode!.children.count)/Float(self.WATER_COUNT)))/2.0 {
-            
-            //println(self.holeTexture)
-            
-            let sprite = SKSpriteNode(texture: SKTexture(imageNamed:"hole"))
-            sprite.physicsBody = SKPhysicsBody(circleOfRadius: sprite.size.width / 3)
-            sprite.physicsBody!.affectedByGravity = false
-            sprite.physicsBody!.dynamic = false
-            
-            sprite.physicsBody!.categoryBitMask = CollisionCategory.Hole.rawValue
-            sprite.physicsBody!.collisionBitMask = CollisionCategory.None.rawValue
-            sprite.physicsBody!.contactTestBitMask = CollisionCategory.Water.rawValue
-            
-            sprite.xScale = 0.75
-            sprite.yScale = 0.75
-            sprite.position = getRandomValue()
-            sprite.runAction(moveSpriteAndDestroy)
-            moveAndDestroySprites.append(sprite)
-            
-            //self.addChild(sprite)
-            lastSpawn = currentTime
-        }
-        
-        for node in moveAndLoopSprites {
-            node.runAction(SKAction.speedTo(CGFloat(CGFloat(2) - CGFloat(liquidNode!.children.count)/CGFloat(self.WATER_COUNT)), duration: 0))
-        }
-        
-        for node in moveAndDestroySprites {
-            node.runAction(SKAction.speedTo(CGFloat(CGFloat(2) - CGFloat(liquidNode!.children.count)/CGFloat(self.WATER_COUNT)), duration: 0))
-        }
     }
-    
     func didBeginContact(contact: SKPhysicsContact) {
         
         var firstBody : SKPhysicsBody
@@ -315,8 +415,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if firstBody.categoryBitMask == CollisionCategory.Water.rawValue && secondBody.categoryBitMask == CollisionCategory.Hole.rawValue {
             firstBody.node?.removeFromParent()
            
-//            let soundfile = SKAction.playSoundFileNamed("bubble.mp3", waitForCompletion: false)
-//            runAction(soundfile)
+            let soundfile = SKAction.playSoundFileNamed("bubble.mp3", waitForCompletion: true)
+            
+            runAction(soundfile)
             
             if liquidNode!.children.count == 0 {
                 
@@ -362,23 +463,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func pauseGame(set:Bool) -> Bool
+    func pauseGame()
     {
-      
-        if(set == false){
-            self.scene!.view!.paused = true
-            gamePaused = true
+        
+        if(!gamePaused){
+            self.scene!.runAction(SKAction.speedTo(0, duration: 0))
             
-        
+            gamePaused = true
+            for child in liquidNode!.children {
+                (child as! SKNode).physicsBody!.dynamic = false
+            }
+            
+            
         }
         
-        else if(set == true){
-            self.scene!.view!.paused = false
-            gamePaused = false
-           
+        else if(gamePaused){
+            
+            self.scene!.runAction(SKAction.speedTo(1, duration: 0))
+            shouldUnpause = true
+            for child in liquidNode!.children {
+                (child as! SKNode).physicsBody!.dynamic = true
+            }
+            
         }
         
-        return gamePaused
+        //return gamePaused
 
     }
     
@@ -399,5 +508,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         return CGPointMake(CGFloat(randomX), 1024 + holeTexture!.size().height/2.0)
     }
+    
     
 }
