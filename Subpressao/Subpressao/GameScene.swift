@@ -307,7 +307,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             
             
-<<<<<<< HEAD
             // var transition = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 1.5)
             var transition = SKTransition.fadeWithDuration(1.5)
             
@@ -323,14 +322,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 skView.presentScene(scene, transition:transition)
             }
-=======
-            self.addChild(sprite)
-            lastSpawn = currentTime
+
         }
         
         for node in moveAndLoopSprites {
             node.runAction(SKAction.speedTo(CGFloat(CGFloat(2) - CGFloat(liquidNode!.children.count)/CGFloat(self.WATER_COUNT)), duration: 0))
->>>>>>> 55ca31924fb579f3d85efe6fb1e21cba0dcbcf79
         }
         
         if (node.name == "botao_continuar_select") {
