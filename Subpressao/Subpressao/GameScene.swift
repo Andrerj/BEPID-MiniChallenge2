@@ -22,7 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case Boundary = 8
     }
     
-   
+    
     
     // Motion manager para uso do Acelerometro
     let motionManager = CMMotionManager()
@@ -52,21 +52,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var moveAndLoopSprites = [SKSpriteNode]()
     var musicSounds = MusicSounds ()
     
+    var pauseTeste = PauseScene ()
+    
     var gamePaused:Bool = false
     var shouldUnpause:Bool = false
     var teste: SKSpriteNode?
     
     var pausePopup:SKNode = SKNode()
+    var selectedNode:SKNode = SKNode()
+    
+    var pausaMusica:Bool = false
     
     override func didMoveToView(view: SKView) {
         
-
-       
+        
+        
         //toca musica
-     
+        
         musicSounds.playMusic("1-08 Puzzles")
         
-       
+        
         
         
         physicsWorld.contactDelegate = self
@@ -104,9 +109,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(pausePopup)
         
-  
+        
     }
-
+    
     
     
     func setImages(Tex: SKTexture, Tex2: SKTexture, zIndex: Int){
@@ -132,7 +137,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             backgroundPiece.anchorPoint = CGPoint(x: 0.5, y: 0.0)
             backgroundPiece.setScale(scaleValue)
             backgroundPiece.position = CGPoint(x: self.frame.size.width / 2.0, y: CGFloat(i) * (backTex2.size().height * scaleValue))
-            backgroundPiece.zPosition = CGFloat(zIndex)
+            backgroundPiece.zPosition = CGFloat(zIndex) //TODO: validar se este zIndex esta sobrepondo as imagens
             backgroundPiece.runAction(moveSkySpritesForever)
             moveAndLoopSprites.append(backgroundPiece)
             
@@ -193,7 +198,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(liquidNode!)
     }
     
-
+    
     
     func getRandomPointInCircle(cCenter:(CGPoint), withRadius cRadius:(CGFloat)) -> CGPoint {
         
@@ -207,64 +212,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return CGPointMake(CGFloat(x), CGFloat(y));
     }
     
-
+    
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         
         var touch: UITouch = touches.first as! UITouch
         var location = touch.locationInNode(self)
-        var node = self.nodeAtPoint(location)
-        
-        // If previous button is touched, start transition to previous scene
-        
-        if (node.name == "tela_2_pause") {
-            teste = self.childNodeWithName("tela_2_pause") as! SKSpriteNode!
-            println(teste?.name)
-            //troca imagem
-            if(gamePaused == false){
-                teste?.hidden = true
-                
+        for node in self.nodesAtPoint(location) as! [SKNode] {
+            
+            if (node.name == nil) {
+                continue
             }
-//            else {
-//                teste?.hidden = false
-//                
-//            }
             
-        }
-        
-        if (node.name == "botao_musica_on") {
-            pause = self.childNodeWithName("botao_musica_on") as! SKSpriteNode!
-            println(pause?.name)
-            //troca imagem
-            if(pause?.hidden == false) {
-                pause?.hidden = true
-                musicSounds.audioPlayer.stop()
-            
+            if (node.name == "musica_on_bt") {
+                self.selectedNode = node
             }
-            else {
-                pause?.hidden = false
-                musicSounds.audioPlayer.play()
+            
+            // If previous button is touched, start transition to previous scene
+            let start:String.Index = node.name!.startIndex
+            let end:String.Index = advance(node.name!.startIndex, 4)
+            
+            //println(node.name?[start...end])
+            
+            if node.name?[start...end] == "botao" {
+                self.selectedNode = node
+                self.selectedNode.hidden = true
             }
-        }
-        
-        if (node.name == "botao_continuar_select") {
-            continuar = self.childNodeWithName("botao_continuar_select") as! SKSpriteNode!
-            println(continuar?.name)
+            //            if (node.name == "botao_tela_2_pause") {
+            //                teste = self.childNodeWithName("botao_tela_2_pause") as! SKSpriteNode!
+            ////                println(teste?.name)
+            //                //troca imagem
+            //                if(gamePaused == false){
+            //                    teste?.hidden = true
+            //
+            //                }
+            //                            else {
+            //                                teste?.hidden = false
+            //
+            //                            }
+            //
+            //            }
             
-            //troca imagem
-            continuar?.hidden = true
-            
-        }
-        
-        if (node.name == "botao_reiniciar_select") {
-            Reiniciar = self.childNodeWithName("botao_reiniciar_select") as! SKSpriteNode!
-            println(Reiniciar?.name)
-            //troca imagem
-            
-            Reiniciar?.hidden = true
-            
-            
-            
+    
         }
     }
     
@@ -272,81 +261,111 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         var touch: UITouch = touches.first as! UITouch
         var location = touch.locationInNode(self)
-        var node = self.nodeAtPoint(location)
         
-        if (node.name == "tela_2_pause") {
-            teste = self.childNodeWithName("tela_2_pause") as! SKSpriteNode!
+        println(self.selectedNode.name)
+        
+        self.selectedNode.hidden = false
+        
+        for anyNode in self.nodesAtPoint(location) {
             
-
-            //pausa jogo
-            if(gamePaused == false){
+            let node = anyNode as! SKNode
+            
+            
+            if (node.name == nil) {
+                continue
+            }
+            
+            if node == selectedNode {
                 
-                pauseGame()
+                if (node.name == "musica_on_bt") {
+                    
+                    //troca imagem
+                   
+                    if (pausaMusica == false){
+                        node.hidden = true
+                        pausaMusica = true
+                        musicSounds.audioPlayer.stop()
+                        
+                    }
+                    else {
+                        node.hidden = false
+                        pausaMusica = false
+                        musicSounds.audioPlayer.play()
+                    }
+                }
                 
-                for child in (SKScene.unarchiveFromFile("PauseScene"))!.children {
+                if (node.name == "botao_tela_2_pause") {
+                    teste = self.childNodeWithName("botao_tela_2_pause") as! SKSpriteNode!
+                    
+                    
+                    //pausa jogo
+                    if(gamePaused == false){
+                        
+                        pauseGame()
+                        
+                        for child in (SKScene.unarchiveFromFile("PauseScene"))!.children {
+                            
+                            pausePopup.addChild((child.copy()) as! SKNode)
+                        }
+                        
+                        
+                    }
+                    //            else {
+                    //
+                    //                pauseGame(gamePaused)
+                    //            }
+                }
                 
-                    pausePopup.addChild((child.copy()) as! SKNode)
+                if (node.name == "botao_reiniciar_select") {
+                    //Reiniciar = self.childNodeWithName("botao_reiniciar_select") as! SKSpriteNode!
+                    //            println(Reiniciar?.name)
+                    //troca imagem
+                    
+                    //Reiniciar?.hidden = false
+                    
+                    musicSounds.audioPlayer.stop()
+                    
+                    
+                    
+                    // var transition = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 1.5)
+                    var transition = SKTransition.fadeWithDuration(1.5)
+                    
+                    if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
+                        // Configure the view.
+                        let skView = self.view as SKView!
+                        
+                        /* Sprite Kit applies additional optimizations to improve rendering performance */
+                        skView.ignoresSiblingOrder = true
+                        
+                        /* Set the scale mode to scale to fit the window */
+                        scene.scaleMode = .AspectFill
+                        
+                        skView.presentScene(scene, transition:transition)
+                    }
+                    
                 }
                 
                 
-            }
-//            else {
-//                
-//                pauseGame(gamePaused)
-//            }
-        }
-        
-        if (node.name == "botao_reiniciar_select") {
-            Reiniciar = self.childNodeWithName("botao_reiniciar_select") as! SKSpriteNode!
-            println(Reiniciar?.name)
-            //troca imagem
-            
-            Reiniciar?.hidden = false
-            
-            musicSounds.audioPlayer.stop()
-            
-            
-            
-            // var transition = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 1.5)
-            var transition = SKTransition.fadeWithDuration(1.5)
-            
-            if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
-                // Configure the view.
-                let skView = self.view as SKView!
                 
-                /* Sprite Kit applies additional optimizations to improve rendering performance */
-                skView.ignoresSiblingOrder = true
-                
-                /* Set the scale mode to scale to fit the window */
-                scene.scaleMode = .AspectFill
-                
-                skView.presentScene(scene, transition:transition)
-            }
+                //        for node in moveAndLoopSprites {
+                //            node.runAction(SKAction.speedTo(CGFloat(CGFloat(2) - CGFloat(liquidNode!.children.count)/CGFloat(self.WATER_COUNT)), duration: 0))
+                //        }
+                //
+                if (node.name == "botao_continuar_select") {
 
-        }
-        
-        for node in moveAndLoopSprites {
-            node.runAction(SKAction.speedTo(CGFloat(CGFloat(2) - CGFloat(liquidNode!.children.count)/CGFloat(self.WATER_COUNT)), duration: 0))
-        }
-        
-        if (node.name == "botao_continuar_select") {
-            continuar = self.childNodeWithName("botao_continuar_select") as! SKSpriteNode!
-            println(continuar?.name)
-            
-            //troca imagem
-            continuar?.hidden = false
-            
-            pauseGame()
-
-            for child in pausePopup.children {
-                
-                
-                child.removeFromParent()
-                teste?.hidden = false
-
-                
+                    pauseGame()
+                    
+                    for child in pausePopup.children {
+                        
+                        
+                        child.removeFromParent()
+                        teste?.hidden = false
+                        
+                    }
+                }
             }
         }
+        self.selectedNode = SKNode()
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -379,6 +398,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 sprite.xScale = 0.75
                 sprite.yScale = 0.75
+                sprite.zPosition++ //TODO: confirmar se é necessário somar no zPosition
                 sprite.position = getRandomValue()
                 sprite.runAction(moveSpriteAndDestroy)
                 moveAndDestroySprites.append(sprite)
@@ -419,7 +439,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if firstBody.categoryBitMask == CollisionCategory.Water.rawValue && secondBody.categoryBitMask == CollisionCategory.Hole.rawValue {
             firstBody.node?.removeFromParent()
-           
+            
             let soundfile = SKAction.playSoundFileNamed("bubble.mp3", waitForCompletion: true)
             
             runAction(soundfile)
@@ -481,7 +501,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             
         }
-        
+            
         else if(gamePaused){
             
             self.scene!.runAction(SKAction.speedTo(1, duration: 0))
@@ -493,7 +513,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         //return gamePaused
-
+        
     }
     
     func getWaterAveragePosition() -> CGPoint {

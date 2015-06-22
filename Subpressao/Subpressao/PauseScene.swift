@@ -29,29 +29,30 @@ class PauseScene: SKScene {
         
         
         
-        if (node.name == "botao_musica_on") {
-            pause = self.childNodeWithName("botao_musica_on") as! SKSpriteNode!
-            println(pause?.name)
-            //troca imagem
-            if(pause?.hidden == false) {
-                pause?.hidden = true
-                musicSounds.audioPlayer.stop()
-
-            }
-            else {
-                pause?.hidden = false
-              //  musicSounds.audioPlayer.play()
-            }
-        }
+//        if (node.name == "botao_musica_on") {
+//            pause = self.childNodeWithName("botao_musica_on") as! SKSpriteNode!
+//            println(pause?.name)
+//            //troca imagem
+//            if(pause?.hidden == false) {
+//                pause?.hidden = true
+//                musicSounds.audioPlayer.stop()
+//
+//            }
+//            else {
+//                pause?.hidden = false
+//              //  musicSounds.audioPlayer.play()
+//            }
+//        }
+        
+        
         if (node.name == "botao_continuar_select") {
             continuar = self.childNodeWithName("botao_continuar_select") as! SKSpriteNode!
             println(continuar?.name)
             
             //troca imagem
             continuar?.hidden = true
-            
-        }
         
+        }
         if (node.name == "botao_reiniciar_select") {
             Reiniciar = self.childNodeWithName("botao_reiniciar_select") as! SKSpriteNode!
             println(Reiniciar?.name)
@@ -64,8 +65,16 @@ class PauseScene: SKScene {
         }
         
     }
-    
-    
+    func teste(){
+        //if (node.name == "botao_continuar_select") {
+            pause = self.childNodeWithName("botao_musica_on") as! SKSpriteNode!
+            println(pause?.name)
+            
+            //troca imagem
+            pause?.hidden = true
+            
+      //  }
+    }
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         var touch: UITouch = touches.first as! UITouch
         var location = touch.locationInNode(self)
