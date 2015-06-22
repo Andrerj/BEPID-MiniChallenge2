@@ -22,11 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case Boundary = 8
     }
     
-<<<<<<< HEAD
-    
-    
-=======
->>>>>>> 072fe2fc89b7751453045f898cfa21b88706c978
+
     // Motion manager para uso do Acelerometro
     let motionManager = CMMotionManager()
     
@@ -64,28 +60,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var pausePopup:SKNode = SKNode()
     var selectedNode:SKNode = SKNode()
     
-    var pausaMusica:Bool = false
+    var pausaMusica:Int = 1
     
     override func didMoveToView(view: SKView) {
         
-<<<<<<< HEAD
-        
-        
-=======
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: ("pauseGame") , name: UIApplicationDidEnterBackgroundNotification, object: nil)
-       
->>>>>>> 072fe2fc89b7751453045f898cfa21b88706c978
+
         //toca musica
         
         musicSounds.playMusic("1-08 Puzzles")
         
-<<<<<<< HEAD
-        
-        
-        
-=======
-       
->>>>>>> 072fe2fc89b7751453045f898cfa21b88706c978
+
         physicsWorld.contactDelegate = self
         
         configureAccelerometer()
@@ -121,14 +105,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(pausePopup)
         
-        
-<<<<<<< HEAD
     }
-    
-=======
-  
-    }
->>>>>>> 072fe2fc89b7751453045f898cfa21b88706c978
+
     
     
     func setImages(Tex: SKTexture, Tex2: SKTexture, zIndex: Int){
@@ -229,11 +207,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return CGPointMake(CGFloat(x), CGFloat(y));
     }
     
-<<<<<<< HEAD
-    
-    
-=======
->>>>>>> 072fe2fc89b7751453045f898cfa21b88706c978
+
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         
         var touch: UITouch = touches.first as! UITouch
@@ -258,20 +232,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.selectedNode = node
                 self.selectedNode.hidden = true
             }
-            //            if (node.name == "botao_tela_2_pause") {
-            //                teste = self.childNodeWithName("botao_tela_2_pause") as! SKSpriteNode!
-            ////                println(teste?.name)
-            //                //troca imagem
-            //                if(gamePaused == false){
-            //                    teste?.hidden = true
-            //
-            //                }
-            //                            else {
-            //                                teste?.hidden = false
-            //
-            //                            }
-            //
-            //            }
+      
             
     
         }
@@ -282,26 +243,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var touch: UITouch = touches.first as! UITouch
         var location = touch.locationInNode(self)
         
-<<<<<<< HEAD
-        println(self.selectedNode.name)
-=======
-        if (node.name == "tela_2_pause") {
-            teste = self.childNodeWithName("tela_2_pause") as! SKSpriteNode!
-            
-
-            //pausa jogo
-            if(gamePaused == false){
-                
-                pauseGame()
-                
-                
-            }
-//            else {
-//                
-//                pauseGame(gamePaused)
-//            }
-        }
->>>>>>> 072fe2fc89b7751453045f898cfa21b88706c978
         
         self.selectedNode.hidden = false
         
@@ -320,15 +261,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     //troca imagem
                    
-                    if (pausaMusica == false){
+                    if (pausaMusica == 1){
+                        
                         node.hidden = true
-                        pausaMusica = true
+                        pausaMusica = 0
                         musicSounds.audioPlayer.stop()
                         
                     }
                     else {
                         node.hidden = false
-                        pausaMusica = false
+                        pausaMusica = 1
                         musicSounds.audioPlayer.play()
                     }
                 }
@@ -349,18 +291,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         
                         
                     }
-                    //            else {
-                    //
-                    //                pauseGame(gamePaused)
-                    //            }
+                 
                 }
                 
                 if (node.name == "botao_reiniciar_select") {
-                    //Reiniciar = self.childNodeWithName("botao_reiniciar_select") as! SKSpriteNode!
-                    //            println(Reiniciar?.name)
-                    //troca imagem
-                    
-                    //Reiniciar?.hidden = false
+                
                     
                     musicSounds.audioPlayer.stop()
                     
@@ -440,11 +375,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 sprite.xScale = 0.75
                 sprite.yScale = 0.75
-<<<<<<< HEAD
-                sprite.zPosition++ //TODO: confirmar se é necessário somar no zPosition
-=======
-                sprite.zPosition = 1
->>>>>>> 072fe2fc89b7751453045f898cfa21b88706c978
+
                 sprite.position = getRandomValue()
                 sprite.runAction(moveSpriteAndDestroy)
                 moveAndDestroySprites.append(sprite)
