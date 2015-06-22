@@ -32,8 +32,10 @@ class GameOverScene: SKScene{
     
     override func didMoveToView(view: SKView) {
         
+        var score = Int(gameScene.score)
+        
         pontos = self.childNodeWithName("PontosLabel") as! SKLabelNode!
-        pontos?.text = "\(gameScene.score / 10)"
+        pontos?.text = "\(score / 10)"
         pontos?.fontName = "CutOutJams2-Regular"
         
         recorde = self.childNodeWithName("RecordeLabel") as! SKLabelNode!
