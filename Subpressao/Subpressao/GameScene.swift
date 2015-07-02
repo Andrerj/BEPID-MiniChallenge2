@@ -45,7 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabel:SKLabelNode?
     var recorde:Int = 0
     
-    let WATER_COUNT = 30
+    let WATER_COUNT = 20
     
     var moveAndDestroySprites = [SKSpriteNode]()
     var moveAndLoopSprites = [SKSpriteNode]()
@@ -79,7 +79,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         createWater()
         
-        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRectMake(245, 0, 277, 924))
+        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRectMake(470, 0, 595, 1845))
         self.physicsBody!.categoryBitMask = CollisionCategory.Boundary.rawValue
         self.physicsBody!.collisionBitMask = CollisionCategory.Water.rawValue
         self.physicsBody!.contactTestBitMask = CollisionCategory.None.rawValue
@@ -87,7 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         circularBoundary = SKNode()
         circularBoundary?.position = waterStartPos!.position
         let circlePath:CGMutablePathRef!  = CGPathCreateMutable();
-        CGPathAddArc(circlePath, nil, 0, 0, 70, 0, CGFloat(M_PI * 2), true);
+        CGPathAddArc(circlePath, nil, 0, 0, 140, 0, CGFloat(M_PI * 2), true);
         circularBoundary?.physicsBody = SKPhysicsBody(edgeLoopFromPath: circlePath)
         circularBoundary?.physicsBody!.pinned = true
         self.addChild(circularBoundary!)
@@ -117,7 +117,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let scaleValue:CGFloat = self.frame.size.height/backTex.size().height
         
-        var moveSkySprite = SKAction.moveByX(0, y: -backTex.size().height * 2 * scaleValue, duration: NSTimeInterval(0.01 * backTex.size().height * scaleValue))
+        var moveSkySprite = SKAction.moveByX(0, y: -backTex.size().height * 2 * scaleValue, duration: NSTimeInterval(0.005 * backTex.size().height * scaleValue))
         
         var resetSkySprite = SKAction.moveByX(0, y: backTex.size().height * 2 * scaleValue, duration: 0.0)
         
@@ -149,20 +149,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         println(self.view!.frame)
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: self.view!.frame)
         
-        motionManager.accelerometerUpdateInterval = 0.2
+        motionManager.accelerometerUpdateInterval = 0.3
         motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue(), withHandler:{
             accelerometerData, error in
             let acceleration = accelerometerData.acceleration;
-            self.physicsWorld.gravity = CGVectorMake(CGFloat(acceleration.x * 9.8) , CGFloat(acceleration.y * 9.8));
+            self.physicsWorld.gravity = CGVectorMake(CGFloat(acceleration.x * 25) , CGFloat(acceleration.y * 25));
         })
         
     }
     
     func createWater() {
-        let width = 16;
-        let density = 1;
-        let blurRadius = 12;
-        let radius = 8;
+        let width = 32;
+        let density = 2;
+        let blurRadius = 24;
+        let radius = 16;
         
         /* Create a texturing strategy for the liquid -- built-in, or on your own */
         let solidEffect:LQKSolidColorEffect = LQKSolidColorEffect(color: UIColor(red: CGFloat(70/255.0), green: CGFloat(200/255.0), blue: CGFloat(240/255.0), alpha: 1), withIndex: CGFloat(1), withWidth: CGFloat(width))
@@ -368,13 +368,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 sprite.physicsBody = SKPhysicsBody(circleOfRadius: sprite.size.width / 3)
                 sprite.physicsBody!.affectedByGravity = false
                 sprite.physicsBody!.dynamic = false
-                
+                sprite.zPosition = 2
                 sprite.physicsBody!.categoryBitMask = CollisionCategory.Hole.rawValue
                 sprite.physicsBody!.collisionBitMask = CollisionCategory.None.rawValue
                 sprite.physicsBody!.contactTestBitMask = CollisionCategory.Water.rawValue
                 
-                sprite.xScale = 0.75
-                sprite.yScale = 0.75
+                sprite.xScale = 1.5
+                sprite.yScale = 1.5
 
                 sprite.position = getRandomValue()
                 sprite.runAction(moveSpriteAndDestroy)
@@ -514,11 +514,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func getRandomValue () -> CGPoint{
-        let randomX = arc4random_uniform(277)+245
+        let randomX = arc4random_uniform(554)+490
         // y coordinate between MinY (top) and MidY (middle):
         // let randomY = arc4random_uniform(UInt32(self.view!.frame.height))
         
-        return CGPointMake(CGFloat(randomX), 1024 + holeTexture!.size().height/2.0)
+        return CGPointMake(CGFloat(randomX), 2048 + holeTexture!.size().height/2.0)
     }
     
     
