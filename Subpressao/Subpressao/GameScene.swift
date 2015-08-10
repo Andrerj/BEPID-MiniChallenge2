@@ -60,7 +60,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var pausePopup:SKNode = SKNode()
     var selectedNode:SKNode = SKNode()
     
-    var pausaMusica:Int = 1
+    var pausaMusica:Bool = false
     
     override func didMoveToView(view: SKView) {
         
@@ -117,7 +117,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let scaleValue:CGFloat = self.frame.size.height/backTex.size().height
         
-        var moveSkySprite = SKAction.moveByX(0, y: -backTex.size().height * 2 * scaleValue, duration: NSTimeInterval(0.005 * backTex.size().height * scaleValue))
+        var moveSkySprite = SKAction.moveByX(0, y: -backTex.size().height * 2 * scaleValue, duration: NSTimeInterval(0.004 * backTex.size().height * scaleValue))
         
         var resetSkySprite = SKAction.moveByX(0, y: backTex.size().height * 2 * scaleValue, duration: 0.0)
         
@@ -243,6 +243,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var touch: UITouch = touches.first as! UITouch
         var location = touch.locationInNode(self)
         
+        println(self.selectedNode.name)
         
         self.selectedNode.hidden = false
         
@@ -261,16 +262,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     //troca imagem
                    
-                    if (pausaMusica == 1){
+                    if (pausaMusica == false){
                         
                         node.hidden = true
-                        pausaMusica = 0
+                        pausaMusica = true
                         musicSounds.audioPlayer.stop()
                         
                     }
                     else {
                         node.hidden = false
-                        pausaMusica = 1
+                        pausaMusica = false
                         musicSounds.audioPlayer.play()
                     }
                 }
@@ -514,7 +515,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func getRandomValue () -> CGPoint{
-        let randomX = arc4random_uniform(554)+490
+        let randomX = arc4random_uniform(554) + 490
         // y coordinate between MinY (top) and MidY (middle):
         // let randomY = arc4random_uniform(UInt32(self.view!.frame.height))
         

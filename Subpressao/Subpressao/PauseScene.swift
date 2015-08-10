@@ -65,16 +65,7 @@ class PauseScene: SKScene {
         }
         
     }
-    func teste(){
-        //if (node.name == "botao_continuar_select") {
-            pause = self.childNodeWithName("botao_musica_on") as! SKSpriteNode!
-            println(pause?.name)
-            
-            //troca imagem
-            pause?.hidden = true
-            
-      //  }
-    }
+    
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         var touch: UITouch = touches.first as! UITouch
         var location = touch.locationInNode(self)
