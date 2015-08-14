@@ -28,7 +28,6 @@ class HomeScene: SKScene {
         
         if (node.name == "btnJogar") {
             
-            
             //            var gameScene = GameScene(size: self.size)
             var transition = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 1.5)
             //            gameScene.scaleMode = SKSceneScaleMode.AspectFill

@@ -106,8 +106,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(pausePopup)
         
     }
-
-    
     
     func setImages(Tex: SKTexture, Tex2: SKTexture, zIndex: Int){
         
@@ -142,7 +140,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(backgroundNode)
     }
-    
     
     func configureAccelerometer() {
         self.physicsWorld.gravity = CGVectorMake(0 , 0);
@@ -193,8 +190,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(liquidNode!)
     }
     
-    
-    
     func getRandomPointInCircle(cCenter:(CGPoint), withRadius cRadius:(CGFloat)) -> CGPoint {
         
         let r:Float = Float(arc4random_uniform(UInt32(cRadius)))
@@ -206,7 +201,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         return CGPointMake(CGFloat(x), CGFloat(y));
     }
-    
 
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         
@@ -220,6 +214,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             if (node.name == "musica_on_bt") {
                 self.selectedNode = node
+                self.selectedNode.hidden = true
             }
             
             // If previous button is touched, start transition to previous scene
